@@ -5,5 +5,7 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello Tmt World XD!\n";
+    ll n;
+    cin >> n;
+    cout << (1 + n * (n + 1) / 2) << '\n';
 }

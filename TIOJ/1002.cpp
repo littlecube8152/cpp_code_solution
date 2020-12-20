@@ -5,5 +5,7 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello Tmt World XD!\n";
+    ll a, b;
+    cin >> a >> b;
+    cout << a + b << '\n';
 }
