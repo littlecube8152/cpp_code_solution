@@ -25,5 +25,8 @@
       "-std=c++14",
       "-Wall"
     ],
-    "clang.completion.enable": true 
+    "clang.completion.enable": true,
+    "files.associations": {
+      "iostream": "cpp"
+    }
   }

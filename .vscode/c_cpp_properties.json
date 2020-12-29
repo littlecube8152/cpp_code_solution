@@ -3,7 +3,7 @@
       {
         "name": "MSYS2_MinGW",
         "intelliSenseMode": "clang-x64",
-        "compilerPath": " ",
+        "compilerPath": "C:/MSYS2/mingw64/bin/gcc.exe",
         "includePath": [
           "${workspaceFolder}"
         ],
