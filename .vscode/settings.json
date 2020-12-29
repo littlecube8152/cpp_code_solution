@@ -27,6 +27,8 @@
     ],
     "clang.completion.enable": true,
     "files.associations": {
-      "iostream": "cpp"
+      "iostream": "cpp",
+      "*.tcc": "cpp",
+      "random": "cpp"
     }
   }
