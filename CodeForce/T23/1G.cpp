@@ -12,17 +12,22 @@ int main()
     cin >> t;
     while (t--)
     {
-        int n;
+        int n, r = 0;
         cin >> n;
-        for (int i = 0; i < n; i++)
+        while (n > 1)
         {
-            int tmp;
-            cin >> tmp;
-            if (i % 2)
-                cout << -(abs(tmp)) << " ";
+
+            if (n % 2 || n == 2)
+            {
+                n--;
+                r++;
+            }
             else
-                cout << (abs(tmp)) << " ";
+            {
+                n = 2;
+                r++;
+            }
         }
-        cout << '\n';
+        cout << r << '\n';
     }
 }
