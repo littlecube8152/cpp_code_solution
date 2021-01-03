@@ -6,8 +6,9 @@
 #define _INFINITY 9223372036854775807
 using namespace std;
 
-map<int, int> m;
-
 int main()
 {
+    double a, b;
+    cin >> a >> b;
+    cout << max(a, b) << '\n';
 }

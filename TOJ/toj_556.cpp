@@ -1,43 +1,37 @@
-#include <iostream>
-#include <math.h>
+#include <bits/stdc++.h>
+#define ll long long
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define MOD 1000000007
+#define _INFINITY 9223372036854775807
 using namespace std;
 
-long long int work, part, money;
-long long int works[100005], paid[100005];
-long long int times[100005], max_time = 0;
+ll work, part, money, works[100005], paid[100005], max_time = 0;
 
-long long int binary_search(long long int max, long long int min)
+ll binary_search(ll mmax, ll min)
 {
-    long long int tmp_money = money;
-    if (max - min <= 1)
+    ll tmp_money = money;
+    if (mmax - min <= 1)
     {
-
-        for (long long int i = 0; i < work; i++)
-        {
-
-            tmp_money -= ceil(((double)part - ((double)min * (double)works[i])) / (double)paid[i]);
-            if (tmp_money < 0)
-            {
-                return max;
-            }
-        }
-        return min;
+        for (ll i = 0; i < work; i++)
+            tmp_money -= (max(0LL, part - (min * works[i])) + paid[i] - 1) / paid[i];
+        if (tmp_money < 0)
+            return mmax;
+        else
+            return min;
     }
     else
     {
-        long long int mid = (max + min) / 2;
+        ll mid = (mmax + min) / 2;
 
-        for (long long int i = 0; i < work; i++)
-        {
-            tmp_money -= ceil(((double)part - ((double)mid * (double)works[i])) / (double)paid[i]);
-            if (tmp_money < 0)
-            {
-                cout << "Binary Searching: " << max << " to " << mid << '\n';
-                return binary_search(max, mid + 1);
-            }
+        for (ll i = 0; i < work; i++){
+            
+            tmp_money -= (max(0LL, part - (mid * works[i])) + paid[i] - 1) / paid[i];
         }
-        cout << "Binary Searching: " << mid << " to " << min << '\n';
-        return binary_search(mid, min);
+        if (tmp_money < 0)
+            return binary_search(mmax, mid + 1);
+        else
+            return binary_search(mid, min);
     }
 }
 
@@ -48,16 +42,10 @@ int main()
     for (long long int i = 0; i < work; i++)
     {
         cin >> works[i];
-        times[i] = ceil((float)part / (float)works[i]);
-        if (times[i] > max_time)
-        {
-            max_time = times[i];
-        }
+        max_time = max(max_time, (part + works[i] - 1) / works[i]);
     }
     for (long long int i = 0; i < work; i++)
-    {
         cin >> paid[i];
-    }
 
     cout << binary_search(max_time, 0) << "\n";
 }

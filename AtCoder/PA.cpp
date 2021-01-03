@@ -6,8 +6,11 @@
 #define _INFINITY 9223372036854775807
 using namespace std;
 
-map<int, int> m;
-
+ll b[500000];
 int main()
 {
+    int a, b, c;
+    string s;
+    cin >> a >> b >> c >> s;
+    cout << a + b + c << " " << s;
 }

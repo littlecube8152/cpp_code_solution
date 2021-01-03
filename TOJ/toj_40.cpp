@@ -4,16 +4,16 @@ using namespace std;
 
 int main()
 {
-    long long int a, b, mult;
-    while (cin >> a)
+    long long int a, b, gcd, tb;
+    while (cin >> a >> b)
     {
-        cin >> b;
-        mult = a * b;
-        while (a != 0 && b != 0)
+        gcd = a;
+        tb = b;
+        while (gcd != 0 && b != 0)
         {
-            a %= b;
-            swap(a, b);
+            gcd %= b;
+            swap(gcd, b);
         }
-        cout << (mult / a) << endl;
+        cout << (a / gcd) * tb << endl;
     }
 }

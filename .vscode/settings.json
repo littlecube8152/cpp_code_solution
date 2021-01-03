@@ -29,6 +29,10 @@
     "files.associations": {
       "iostream": "cpp",
       "*.tcc": "cpp",
-      "random": "cpp"
+      "random": "cpp",
+      "ostream": "cpp",
+      "deque": "cpp",
+      "vector": "cpp",
+      "cmath": "cpp"
     }
   }
