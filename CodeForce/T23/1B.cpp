@@ -8,15 +8,14 @@ using namespace std;
 
 int main()
 {
-
-string s;
-    while (getline(cin, s))
+    int t;
+    cin >> t;
+    while (t--)
     {
-        stringstream ss;
-        ss << s;
-        int result = 0, tmp;
-        while(ss >> tmp)
-            result++;
-        cout << result << '\n';
+        int n;
+        cin >> n;
+        for (int i = 0; i < n; i++)
+            cout << "2 ";
+        cout << '\n';
     }
 }

@@ -9,14 +9,9 @@ using namespace std;
 int main()
 {
 
-string s;
-    while (getline(cin, s))
+    int i;
+    while (cin >> i)
     {
-        stringstream ss;
-        ss << s;
-        int result = 0, tmp;
-        while(ss >> tmp)
-            result++;
-        cout << result << '\n';
+        cout << i << " ";
     }
 }

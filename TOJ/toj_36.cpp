@@ -1,23 +1,31 @@
-#include <iostream>
-#include <math.h>
+#include <bits/stdc++.h>
+#define ll long long
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define MOD 1000000007
+#define _INFINITY 9223372036854775807
 using namespace std;
+
+ll a, b, c;
+
+ll fast(ll base, ll pow)
+{
+    if (pow == 0)
+        return 1;
+    else if (pow == 1)
+        return base;
+    else if (pow % 2)
+        return fast(base, pow - 1) * base % c;
+    else
+    {
+        int half = fast(base, pow / 2) % c;
+        return half * half % c;
+    }
+}
 int main()
 {
-    long long int a, b, c, a_tmp ,power = 2;
     cin >> a >> b >> c;
     a %= c;
-    a_tmp = a;
-    for (; b > power; )
-    {
-        a *= a;
-        a %= c;
-        b -= power;
-        power *= 2;
-    }
-    for (; b > 0; b--)
-    {
-        a *= a_tmp;
-        a %= c;
-    }
-    cout << a << endl;
+    a = fast(a, b) % c;
+    cout << a << '\n';
 }

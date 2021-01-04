@@ -8,15 +8,15 @@ using namespace std;
 
 int main()
 {
-
-string s;
-    while (getline(cin, s))
+    int t;
+    cin >> t;
+    while (t--)
     {
-        stringstream ss;
-        ss << s;
-        int result = 0, tmp;
-        while(ss >> tmp)
-            result++;
-        cout << result << '\n';
+        int a, b;
+        cin >> a >> b;
+        if (a * 2 >= b + 1)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
 }
