@@ -8,9 +8,9 @@ using namespace std;
 
 struct node
 {
-    int n = 0;
-    int c = 0;
-    ll b = 0;
+    int n = 0;//目前分完
+    int c = 0;//目前分到
+    ll b = 0;//紀錄糖果包狀態
 };
 
 int n, m, a[20], p = 0;

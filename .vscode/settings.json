@@ -33,6 +33,7 @@
       "ostream": "cpp",
       "deque": "cpp",
       "vector": "cpp",
-      "cmath": "cpp"
+      "cmath": "cpp",
+      "iosfwd": "cpp"
     }
   }

@@ -6,7 +6,7 @@
 #define _INFINITY 9223372036854775807
 using namespace std;
 
-ll n, r;
+ll n, r = 0;
 bool b[300005];
 
 int main()
@@ -14,14 +14,14 @@ int main()
     cin >> n;
     for (int i = 0; i < n; i++)
     {
-        int tmp, r = 0;
+        int tmp, t = 0;
         cin >> tmp;
         while (tmp != 0)
         {
-            r += tmp % 2;
+            t += tmp % 2;
             tmp /= 2;
         }
-        b[i] = r % 2;
+        b[i] = t % 2;
     }
     for (int i = 0; i < n - 1; i++)
     {
