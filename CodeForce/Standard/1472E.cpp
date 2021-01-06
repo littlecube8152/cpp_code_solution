@@ -8,9 +8,7 @@ using namespace std;
 
 struct Friend
 {
-    ll w = 0;
-    ll h = 0;
-    ll id;
+    int w, h, id, minw, minh;
 };
 bool comp(Friend f1, Friend f2)
 {

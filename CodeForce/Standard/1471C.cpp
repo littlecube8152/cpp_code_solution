@@ -10,14 +10,14 @@ bool comp(int a, int b)
 {
     return a > b;
 }
-
+int n, m, k[300005], c[300005];
 int main()
 {
     int t;
     cin >> t;
     while (t--)
     {
-        int n, m, k[300005], c[300005];
+
         ll r = 0;
         cin >> n >> m;
         for (int i = 0; i < n; i++)
@@ -28,9 +28,9 @@ int main()
         for (int i = 0; i < n; i++)
         {
             if (k[i] > i + 1)
-                r += c[i + 1];
+                r += c[i];
             else
-                r += c[k[i]];
+                r += c[k[i]-1];
         }
         cout << r << '\n';
     }
