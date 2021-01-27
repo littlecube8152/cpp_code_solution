@@ -5,7 +5,7 @@
 #define MOD 1000000007
 #define _INFINITY 9223372036854775807
 using namespace std;
-
+ 
 ll b[500000];
 int main()
 {
@@ -13,30 +13,20 @@ int main()
     cin >> t;
     while (t--)
     {
-        ll a, b, c;
-        cin >> a >> b >> c;
-        cout << (a | b) + (a | c) << " " << (a | b) + (b | c) << " " << (a & b & c)  << " " << (a | b | c)<< '\n';
-    }
-    cin >> t;
-    while (t--)
-    {
         int n;
         cin >> n;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n;i++)
             cin >> b[i];
-
+        
         ll r = 0;
-        for (int j = 0; j < n; j++)
-        {
+        for (int j = 0; j < n;j++){
             ll x = 0, y = 0, t;
-            for (int i = 0; i < n; i++)
-            {
+            for (int i = 0; i < n; i++){
                 t = b[i] & b[j];
                 x += t;
                 x %= MOD;
             }
-            for (int k = 0; k < n; k++)
-            {
+            for (int k = 0; k < n; k++){
                 t = b[k] | b[j];
                 y += t;
                 y %= MOD;

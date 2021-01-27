@@ -8,15 +8,27 @@ using namespace std;
 
 struct Friend
 {
-    int w, h, id, minw, minh;
+    int h, w, id;
 };
+
 bool comp(Friend f1, Friend f2)
 {
-    if (f1.w != f2.w)
-        return f1.w < f2.w;
-    if (f1.h != f2.h)
-        return f1.h < f2.h;
-    return 1;
+    return make_tuple(f1.h, f1.w, f1.id) < make_tuple(f2.h, f2.w, f2.id);
+}
+
+Friend standard(Friend f)
+{
+    f.w = 0;
+    f.id = 0;
+    return f;
+}
+
+Friend reverse(Friend f)
+{
+    swap(f.h, f.w);
+    f.w = 0;
+    f.id = 0;
+    return f;
 }
 
 int main()
@@ -26,25 +38,38 @@ int main()
     while (t--)
     {
         ll n;
-        vector<Friend> v, sortedv;
+        vector<Friend> v, minw;
         vector<int> r(200005, -1);
         cin >> n;
         for (int i = 0; i < n; i++)
         {
             int w, h;
-            Friend f;
-            cin >> w >> h;
-            f.w = w;
-            f.h = h;
-            f.id = i + 1;
-            v.emplace_back(f);
+            cin >> h >> w;
+            v.emplace_back(Friend{h, w, i + 1});
         }
         sort(v.begin(), v.end(), comp);
-        for (auto f : v)
-            for (auto j : v)
-                if (r[j.id] == -1)
-                    if ((f.w < j.w && f.h < j.h) || (f.h < j.w && f.w < j.h))
-                        r[j.id] = f.id;
+        minw.emplace_back(v[0]);
+        for (int i = 1; i < n; i++)
+            if (minw[i - 1].w <= v[i].w)
+                minw.emplace_back(minw[i - 1]);
+            else
+                minw.emplace_back(v[i]);
+        for (int i = 0; i < n; i++)
+        {
+            int std = (lower_bound(v.begin(), v.end(), standard(v[i]), comp) - v.begin() - 1);
+            int rev = (lower_bound(v.begin(), v.end(), reverse(v[i]), comp) - v.begin() - 1);
+            //cout << std << " " << rev;
+
+            if (std >= 0 && std < n)
+                if (minw[(int)std].w < v[i].w)
+                    r[v[i].id] = minw[std].id;
+
+            if (rev >= 0 && rev < n)
+                if (minw[(int)rev].w < v[i].h)
+                {
+                    r[v[i].id] = minw[rev].id;
+                }
+        }
 
         for (int i = 1; i <= n; i++)
             cout << r[i] << " \n"[i == n];
