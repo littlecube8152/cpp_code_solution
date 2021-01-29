@@ -13,25 +13,30 @@ int main()
     int n;
     int r[100005] = {0};
     cin >> n;
+    r[0] = 1;
     for (int i = 1; i <= n; i++)
     {
         int m;
         cin >> m;
-        for (int j = i - 1; j > 0; j--)
-            if (r[j])
-                if (!(m % (j + 1)))
-                {
-                    r[j + 1] += r[j];
-                    r[j + 1] %= MOD;
-                }
-        r[1]++;
+        //if (m <= i)
+        //r[i % 2][m] = (r[i % 2][m] + r[(i - 1) % 2][m - 1]) % MOD;
+        vector<int> v;
+        for (int j = min((int)sqrt(m), i); j > 0; j--)
+            if (m % j == 0)
+            {
+                v.emplace_back(j);
+                if (m / j != j)
+                    v.emplace_back(m / j);
+            }
+        sort(v.begin(), v.end(), [](int a, int b) { return a > b; });
+
+        for (int j : v)
+            if (j <= i)
+                r[j] = (r[j - 1] + r[j]) % MOD;
     }
-    ll sum = 0;
+    int sum = 0;
     for (int i = 1; i <= n; i++)
-    {
-        sum += r[i];
-        sum %= MOD;
-    }
+        sum = (sum + r[i]) % MOD;
     cout << sum;
     return 0;
 }

@@ -30,6 +30,8 @@ const bigInt enptyBigInt;
 
 int main()
 {
+
+    cout << -1 % 5;
     int a, b, c;
     string s;
     cout << "Parameters:\n[Space] [Times] [Length]\n";
