@@ -13,25 +13,23 @@ int main()
 {
     map<int, int> m;
     stack<int> s;
-    cin >> n; 
-    
+    cin >> n;
+
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        if (m[a[i]] == 0)
+
+        m[a[i]] = i;
+        v[i] = 1;
+        if (m[a[i] - 1] != 0)
         {
-            m[a[i]] = i;
-            v[i] = 1;
-            if (m[a[i] - 1] != 0)
-            {
-                p[i] = m[a[i] - 1];
-                v[i] = v[p[i]] + 1;
-            }
-            if (v[i] > r)
-            {
-                r = v[i]; 
-                ir = i;
-            }
+            p[i] = m[a[i] - 1];
+            v[i] = v[p[i]] + 1;
+        }
+        if (v[i] > r)
+        {
+            r = v[i];
+            ir = i;
         }
     }
     while (ir != 0)
