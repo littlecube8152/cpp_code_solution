@@ -22,7 +22,7 @@ bool comp(int a, int b)
 bool dfs(node state)
 {
     //cout << "TRY " << state.n << " person  " << state.c << " current  state " << state.b << '\n';
-    if (state.n == n && state.c == 0 && state.b == pow(2, m) - 1)
+    if (state.n == n && state.c == 0 && state.b == (1 << m) - 1)
         return 1;
     else if (state.n == n || state.c > p)
         return 0;
