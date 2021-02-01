@@ -31,25 +31,7 @@ const bigInt enptyBigInt;
 int main()
 {
 
-    cout << -1 % 5;
-    int a, b, c;
-    string s;
-    cout << "Parameters:\n[Space] [Times] [Length]\n";
-    cin >> a >> b >> c;
-    while (b--)
-    {
-        for (int i = 1; i <= c; i++)
-        {
-            if (!(rand() % a))
-                cout << " ";
-            else
-                cout << (char)(rand() % 26 + 97);
-        }
-        cout << "\n\n\n";
-    }
-
-    /*
-    vector<bigInt> v = {enptyBigInt};z
+    vector<bigInt> v = {enptyBigInt};
     fstream file;
     file.open("Triangle.txt", ios::out | ios::trunc);
     int n;
@@ -75,8 +57,5 @@ int main()
             file << " ";
         }
         file << '\n';
-    }*/
-    cout << "Input anything with enter to exit.";
-    getline(cin, s);
-    getline(cin, s);
+    }
 }
