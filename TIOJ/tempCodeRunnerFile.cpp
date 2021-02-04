@@ -8,7 +8,17 @@ using namespace std;
 
 int main()
 {
-    double a, b;
-    cin >> a >> b;
-    cout << max(a, b) << '\n';
+    string sa, sb;
+    stringstream ssa, ssb;
+    long double a, b;
+    cin >> sa >> sb;
+    ssa << sa;
+    ssb << sb;
+    ssa >> a;
+    ssb >> b;
+    if(a > b){
+        cout << sa << '\n';
+    }
+    else
+        cout << sb << '\n';
 }

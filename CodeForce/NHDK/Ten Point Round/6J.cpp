@@ -27,7 +27,7 @@ vector<ll> spliting(ll a)
 
     ll c = rand64();
     k.emplace_back(rand64());
-    for (ll i = 1; i <= (sqrt(a)); i++)
+    for (ll i = 1; i <= (sqrt(a) / 2); i++)
     {
         k.emplace_back(g(k[i - 1], c, a));
         ll d = gcd(abs(k[i] - k[i / 2]), a);
