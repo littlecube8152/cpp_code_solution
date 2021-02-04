@@ -7,11 +7,14 @@
 #define fast ios::sync_with_stdio(0), cin.tie(0)
 using namespace std;
 
-ll dp[1000][1000], n, maxlen = 0, leastp = 10000;
-string s;
-
 int main()
 {
-    cin >> n >> s;
-
+    ll n;
+    while (cin >> n)
+        if (n == 0)
+            return 0;
+        else if (sqrt(n) - floor(sqrt(n)) < 0.000001)
+            cout << "yes\n";
+        else
+            cout << "no\n";
 }

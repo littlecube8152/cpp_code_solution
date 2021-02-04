@@ -13,7 +13,7 @@
           "-static-libgcc",
           "-fcolor-diagnostics",
           "--target=x86_64-w64-mingw", 
-          "-std=c++17" 
+          "-std=c++14" 
         ], 
         "type": "shell", 
         "group": {
