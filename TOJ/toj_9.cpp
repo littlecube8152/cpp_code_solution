@@ -3,9 +3,8 @@
 #define DISTANT_INFINITY -2
 #define cin std::cin
 #define cout std::cout
-class vertex
+struct vertex
 {
-public:
     int height;
     int color = 0; //0 = White, 1 = Grey, 2 = Black
 };

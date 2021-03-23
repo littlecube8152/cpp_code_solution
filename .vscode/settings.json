@@ -5,8 +5,9 @@
     "editor.snippetSuggestions": "top",
     "code-runner.runInTerminal": true,
     "code-runner.executorMap": {
-      "c": "cd $dir && clang $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c11 && $dir$fileNameWithoutExt",
+      //"c": "cd $dir && clang $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c11 && $dir$fileNameWithoutExt",
       "cpp": "cd $dir && clang++ $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c++14 && $dir$fileNameWithoutExt"
+      //"cpp": "cd $dir && g++ -Wall -g -fsigned-char -std=gnu++14 -fsanitize=address -o $fileNameWithoutExt.exe $fileName "
     }, 
     "code-runner.saveFileBeforeRun": true, 
     "code-runner.preserveFocus": true, 
@@ -106,6 +107,7 @@
       "typeindex": "cpp",
       "typeinfo": "cpp",
       "valarray": "cpp",
-      "variant": "cpp"
+      "variant": "cpp",
+      "dpscpp": "cpp"
     }
   }

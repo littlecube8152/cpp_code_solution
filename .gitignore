@@ -31,5 +31,8 @@
 
 # Executables
 *.exe
-*.out
 *.app
+
+# Temp Runner
+tempCodeRunnerFile.cpp
+tempCodeRunnerFile.exe

@@ -1,1 +1,0 @@
-(firsti - (total)) / 2

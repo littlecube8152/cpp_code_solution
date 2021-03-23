@@ -16,9 +16,10 @@ int main()
     ssb << sb;
     ssa >> a;
     ssb >> b;
-    if(a > b){
+    if (a > b)
         cout << sa << '\n';
-    }
+    else if (sa > sb)
+        cout << sa << '\n';
     else
         cout << sb << '\n';
 }

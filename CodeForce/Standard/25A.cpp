@@ -5,18 +5,20 @@ using namespace std;
 
 int main()
 {
-    int n, m[105], odd = 0, even = 0;
+    int n;
+    stack<int> a, b;
     cin >> n;
-    for (int i = 0; i < n ;i++){
-        cin >> m[i];
-        m[i] %= 2;
+    for (int i = 1; i <= n; i++)
+    {
+        int k;
+        cin >> k;
+        if (k % 2)
+            a.push(i);
+        else
+            b.push(i);
     }
-    for (int i = 0; i < n ;i++){
-        if(m[i] == 1)
-            odd = i;
-        if(m[i] == 0)
-            even = i;    
-    }
-    cout << min(odd, even) + 1 << '\n';
-    
+    if (a.size() == 1)
+        cout << a.top();
+    else
+        cout << b.top();
 }
