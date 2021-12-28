@@ -1,29 +1,33 @@
-#include <algorithm>
-#include <iostream>
-#include <vector>
+#pragma GCC optimize("O3,unroll-loops")
+#include <bits/stdc++.h>
+#pragma pack(0)
+#define ll long long
+#define pii pair<ll, ll>
+#define pll pair<ll, ll>
+#define F first
+#define S second
+#define MOD 1000000007
+#define MOD2 998244353
+#define _INFINITY 9223372036854775807
+#define fast ios::sync_with_stdio(0), cin.tie(0)
 using namespace std;
 
-int main()
+bitset<1000005> b = 1;
+int n, sum, k;
+
+signed main()
 {
-    int dice[1005] = {0};
-    int x = 0, y = 0, count;
-    int cal[2000000] = {0};
-    vector<int> possible_y = {};
-
-    cin >> count;
-    for (int i = 0; i < count; i++)
+    cin >> n;
+    while (n--)
     {
-        cin >> dice[i];
-        y += dice[i];
+        cin >> k;
+        sum += k;
+        b |= b << k;
     }
-    sort(dice, dice + count);
-    possible_y.push_back(y);
-
-    for (int i = 0; i < count; i++)
-    {
-        for (int i = 0; i < possible_y.size(); i++)
+    for (int i = sum / 2; i >= 0; i--)
+        if (b[i])
         {
-            int tmp = possible_y.push_back(y);
+            cout << i << " " << sum - i << '\n';
+            break;
         }
-    }
 }

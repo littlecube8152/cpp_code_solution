@@ -1,0 +1,11 @@
+g++
+*.cpp
+-O3
+-Wall
+-Wshadow
+-Wconversion
+-fsanitize=address
+-fsanitize=undefined
+-D GLIBCXX_DEBUG
+-Dtmd
+-g

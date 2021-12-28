@@ -11,14 +11,16 @@ int main()
     int t, m, id = 0;
     vector<int> mem(100, 0);
     cin >> t >> m;
-    while (t--)
+    for (int i = 0; i < t; i++)
     {
         string s;
         int p;
         bool r = false;
-        cin >> s >> p;
+        cin >> s;
         if (s == "alloc")
         {
+            cin >> p;
+            bool r = false;
             for (int i = 0; i <= m - p; i++)
             {
                 bool b = true;
@@ -41,6 +43,7 @@ int main()
         }
         else if (s == "erase")
         {
+            cin >> p;
             for (int i = 0; i < m; i++)
                 if (mem[i] == p)
                 {
@@ -51,10 +54,8 @@ int main()
                 cout << "ILLEGAL_ERASE_ARGUMENT\n";
         }
         else if (s == "defragment")
-        {
             for (int i = 0; i < m; i++)
                 mem[i] = 0;
-        }
+        
     }
-    return 0;
 }

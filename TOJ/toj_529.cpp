@@ -1,9 +1,10 @@
-#include <iostream>
-using namespace std;
+#pragma GCC optimize("Ofast,unroll-loops")
+#pragma GCC target("avx,avx2,sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,fma,tune=native")
+#pragma pack(0)
+#include <cstdio>
+int a, b;
 int main()
 {
-    int a, b;
-    cin >> a >> b;
-    cout << abs(a - b) << endl;
-    
+    scanf("%d %d", &a, &b);
+    printf("%d\n", b - a);
 }
