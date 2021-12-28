@@ -1,154 +1,134 @@
-#pragma GCC optimize("O3,unroll-loops")
+/*  | |       _    _  | |        _____       | |
+//  | |   _  | |  | | | | _____ /  ___|__  __| |___  _____
+//  | |  |_|[   ][   ]| |/  _  \| |    | | | |  _  \/  _  \  
+//  | L__| | | |_ | |_| || ____|| |___ | |_| | |_| || ____|
+//  L____|_| |___||___|_|\_____|\_____|\_____/\____/\_____|
+//  Segment Tree is hard.
+*/
+#pragma GCC optimize("Ofast,unroll-loops")
 #include <bits/stdc++.h>
 #pragma pack(0)
+#define int long long
 #define ll long long
-#define pii pair<ll, ll>
+#define pii pair<int, int>
 #define pll pair<ll, ll>
 #define F first
 #define S second
+#define pb(x) emplace_back(x)
 #define MOD 1000000007
 #define MOD2 998244353
 #define _INFINITY 9223372036854775807
 #define fast ios::sync_with_stdio(0), cin.tie(0)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       using namespace std;
+using namespace std;
 
-struct SegTree
+struct Q
 {
-    int L, R, val;
-    SegTree *l, *r;
-    int mid;
-    SegTree(int L, int R, int val, SegTree *l, SegTree *r) : L(L), R(R), val(val), l(l), r(r), mid((L + R) / 2){};
-    void pull()
-    {
-        val = max((l == nullptr ? 0 : l->val), (r == nullptr ? 0 : r->val));
-    }
-    void build_left()
-    {
-        if (l == nullptr)
-            l = new SegTree(L, mid, 0, nullptr, nullptr);
-    }
-    void build_right()
-    {
-        if (r == nullptr)
-            r = new SegTree(mid + 1, R, 0, nullptr, nullptr);
-    }
-    void modify(int id, int val)
-    {
-        if (L == id && id == R)
-        {
-            this->val = val;
-            return;
-        }
-        if (id <= mid)
-        {
-            build_left();
-            l->modify(id, val);
-        }
-        else
-        {
-            build_right();
-            r->modify(id, val);
-        }
-        pull();
-    }
-    int query(int L, int R)
-    {
-        if (L <= this->L && this->R <= R)
-            return this->val;
-        if (R <= mid)
-            return (l == nullptr ? 0 : l->query(L, R));
-        if (mid + 1 <= L)
-            return (r == nullptr ? 0 : r->query(L, R));
-        return max((l == nullptr ? 0 : l->query(L, R)), (r == nullptr ? 0 : r->query(L, R)));
-    }
+    int i, l, r;
 };
 
-ll fastpow(int base, int p)
+int n, q, arr[1000005], sieve[1000005], seg[4000000], prime[1000005], idx = 1, ans[1000005];
+vector<pii> mq[1000000];
+vector<Q> query;
+
+int fastpow(int base, int p)
 {
-    if (p == 0)
-        return 1;
-    if (p == 1)
-        return base;
-    if (p % 2)
+    int a = 1, b = base;
+    while (p > 0)
     {
-        ll res = (fastpow(base, p - 1) * base);
-        if (res >= MOD)
-            return res % MOD;
-        return res;
+        if (p & 1)
+            a = a * b % MOD;
+        b = b * b % MOD;
+        p >>= 1;
     }
-    ll half = fastpow(base, p / 2), res = half * half;
-    if (res >= MOD)
-        return res % MOD;
-    return res;
+    return a;
 }
 
-int n, q;
-SegTree *root[80000] = {nullptr};
-SegTree *maxmium;
-vector<int> prime = {2};
-int notprime[1000005] = {1, 1};
+void Modify(int l, int r, int i, int pos, int val)
+{
+    //cout << "Modify " << l << " " << pos << " " << val << '\n';
+    seg[i] = seg[i] * val % MOD;
+    if (l == r)
+        return;
+    int mid = (l + r) / 2;
+    if (pos <= mid)
+        Modify(l, mid, i * 2, pos, val);
+    else
+        Modify(mid + 1, r, i * 2 + 1, pos, val);
+}
+
+int Query(int l, int r, int i, int a, int b)
+{
+    if (a <= l && r <= b)
+        return seg[i];
+    else if (b < l || r < a)
+        return 1;
+    else
+    {
+        int mid = (l + r) / 2;
+        return Query(l, mid, i * 2, a, b) * Query(mid + 1, r, i * 2 + 1, a, b) % MOD;
+    }
+}
 
 signed main()
 {
     fast;
-    for (int i = 2; i <= 1000000; i++)
-    {
-        if (!notprime[i])
-            prime.emplace_back(i), notprime[i] = i; 
-        for (auto j : prime)
+    for (int i = 2; i <= 1000000; i += 2)
+        sieve[i] = 2;
+    prime[2] = 1;
+    for (int i = 3; i <= 1000000; i += 2)
+        if (sieve[i] == 0)
         {
-            if (i * j > 1000000)
-                break;
-            notprime[i * j] = j;
-            if (!(i % j))
-                break;
+            sieve[i] = i;
+            prime[i] = ++idx;
+            for (int j = i * i; j <= 1000000; j += i)
+                sieve[j] = i;
         }
-    }
-    cin >> n >> q;
-    for (int i = 0; i < 80000; i++)
-        root[i] = new SegTree(1, n, 0, nullptr, nullptr);
-    maxmium = new SegTree(1, n, 0, nullptr, nullptr);
-    for (int i = 1; i <= n; i++)
-    {
-        int x, maxprime = 1;
-        cin >> x;
-        for (int j = 0; j < prime.size() && prime[j] <= sqrt(x); j++)
-        {
-            int cnt = 0;
-            if(prime[j] != notprime[j])
-                continue;
-            while (x > 1 && (x / prime[j]) * prime[j] == x)
-                cnt++, x /= prime[j];
-            if (cnt)
-            {
 
-                maxprime = max(maxprime, prime[j]);
-                //printf("Modify %d %d^%d\n", i, prime[j], cnt);
-                root[j]->modify(i, cnt);
-            }
-        }
-        if (x > 1)
-        {
-            root[(lower_bound(prime.begin(), prime.end(), x) - prime.begin())]->modify(i, 1);
-            maxprime = max(maxprime, x);
-        }
-        maxmium->modify(i, maxprime);
-    }
+    cin >> n >> q;
+    for (int i = 1; i <= n; i++)
+        cin >> arr[i];
     for (int i = 1; i <= q; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        ll res = 1, maxprime = maxmium->query(x, y);
-
-        for (int j = 0; j < prime.size() && prime[j] <= maxprime; j++)
-        {
-            int p = root[j]->query(x, y);
-            if (p != 0)
-                // printf("Query %d-%d %d^%d\n", x, y, prime[j], root[j]->query(x, y));
-                res = (res * fastpow(prime[j], p));
-            if (res >= MOD)
-                res %= MOD;
-        }
-        cout << res << '\n';
+        int l, r;
+        cin >> l >> r;
+        query.emplace_back(Q{i, l, r});
     }
+    for (int i = 1; i < 4000000; i++)
+        seg[i] = 1;
+
+    sort(query.begin(), query.end(), [](Q q1, Q q2) { return q1.r < q2.r; });
+    idx = 0;
+
+    for (int i = 1; i <= n; i++)
+    {
+        while (arr[i] > 1)
+        {
+            int base = sieve[arr[i]], p = 0;
+            while (arr[i] % base == 0)
+                arr[i] /= base, p++;
+            while (!mq[prime[base]].empty() && p >= mq[prime[base]].back().S)
+            {
+                pii last = mq[prime[base]].back();
+                Modify(1, 1000000, 1, last.F, fastpow(base, last.S * (MOD - 2) % (MOD - 1)));
+                mq[prime[base]].pop_back();
+
+                if (!mq[prime[base]].empty())
+                    Modify(1, 1000000, 1, mq[prime[base]].back().F, fastpow(base, last.S));
+            }
+            int res = fastpow(base, p);
+            Modify(1, 1000000, 1, i, res);
+            if (!mq[prime[base]].empty())
+                Modify(1, 1000000, 1, mq[prime[base]].back().F, fastpow(res, MOD - 2));
+            mq[prime[base]].emplace_back(make_pair(i, p));
+        }
+        while (idx < q && query[idx].r == i)
+        {
+            ans[query[idx].i] = Query(1, 1000000, 1, query[idx].l, query[idx].r);
+            idx++;
+        }
+        if (idx > q - 1)
+            break;
+    }
+    for (int i = 1; i <= q; i++)
+        cout << ans[i] << '\n';
 }

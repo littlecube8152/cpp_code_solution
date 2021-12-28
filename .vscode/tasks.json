@@ -3,18 +3,20 @@
     "tasks": [
       {
         "label": "Compile", 
-        "command": "clang++", 
+        "command": "g++", 
         "args": [
           "${file}",
           "-o",
           "${fileDirname}/${fileBasenameNoExtension}.exe",
-          "-g", 
           "-Wall",
-          "-static-libgcc",
-          "-fcolor-diagnostics",
-          "--target=x86_64-w64-mingw", 
-          "-std=c++14",
-          "-fsanitize=adress" 
+          "-Wextra",
+          "-g",
+          "\"-Wl,--stack,419430400\"",
+          "-fsigned-char",
+          "-std=gnu++17",
+          "-D_GLIBCXX_DEBUG",
+          "-fsanitize=undefined",
+          "-fsanitize-undefined-trap-on-error"
         ], 
         "type": "shell", 
         "group": {
