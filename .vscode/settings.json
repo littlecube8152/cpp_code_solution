@@ -6,8 +6,8 @@
     "code-runner.runInTerminal": true,
     "code-runner.executorMap": {
       //"c": "cd $dir && clang $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c11 && $dir$fileNameWithoutExt",
-      "cpp": "cd $dir && clang++ $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c++14 && $dir$fileNameWithoutExt"
-      //"cpp": "cd $dir && g++ -Wall -g -fsigned-char -std=gnu++14 -fsanitize=address -o $fileNameWithoutExt.exe $fileName "
+      //"cpp": "cd $dir && clang++ $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c++14 && $dir$fileNameWithoutExt"
+      "cpp": "cd $dir && g++ -Wall -Wextra -g \"-Wl,--stack,419430400\" -fsigned-char -std=gnu++17 -D_GLIBCXX_DEBUG -fsanitize=undefined -fsanitize-undefined-trap-on-error -o $fileNameWithoutExt.exe $fileName && $dir$fileNameWithoutExt"
     }, 
     "code-runner.saveFileBeforeRun": true, 
     "code-runner.preserveFocus": true, 
@@ -108,6 +108,11 @@
       "typeinfo": "cpp",
       "valarray": "cpp",
       "variant": "cpp",
-      "dpscpp": "cpp"
+      "dpscpp": "cpp",
+      "rope": "cpp",
+      "slist": "cpp",
+      "*.def": "cpp",
+      "ios": "cpp",
+      "coroutine": "cpp"
     }
   }

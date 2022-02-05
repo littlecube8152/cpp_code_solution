@@ -2,7 +2,7 @@
 using namespace std;
 
 // Notice the sign of a, b 
-void exgcd(int a, int b, int c, int &x, int &y)
+void exgcd(long long a, long long b, long long c, long long &x, long long &y)
 {
     if (b == 0)
         x = c / a, y = 0;
@@ -15,7 +15,7 @@ void exgcd(int a, int b, int c, int &x, int &y)
 
 int main()
 {
-    int x, y;
-    exgcd(7, 12, -1, x, y);
-    cout << x << ' ' << y;
+    long long x, y;
+    exgcd(175196010, 796754844, __gcd(175196010, 796754844), x, y);
+    cout << x * 175196010 + y * 796754844 << " " << __gcd(175196010, 796754844);
 }

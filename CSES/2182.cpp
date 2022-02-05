@@ -39,14 +39,14 @@ signed main()
     for (int i = 1; i <= n; i++)
     {
         cin >> px[i].F >> px[i].S;
-        mul = (mul * (px[i].S + 1)) % (MOD - 1);
     }
     for (int i = 1; i <= n; i++)
     {
-        a = (a * (px[i].S + 1)) % MOD;
-        b = (((b * (fast_pow(px[i].F, px[i].S + 1) - 1)) % MOD) * inv(px[i].F - 1)) % MOD;
-        c = (c * fast_pow(px[i].F, (px[i].S * mul) / 2)) % MOD;
-    //
+        a = a * (px[i].S + 1) % MOD;
+        b = ((b * (fast_pow(px[i].F, px[i].S + 1) - 1)) % MOD) * inv(px[i].F - 1) % MOD;
+        c = fast_pow(c, (px[i].S + 1) % (MOD - 1)) * fast_pow(fast_pow(px[i].F, (px[i].S * (px[i].S + 1)) / 2), mul) % MOD;
+        mul = mul * (px[i].S + 1) % (MOD - 1);
+        //
     }
     cout << a << " " << b << " " << c << '\n';
 }

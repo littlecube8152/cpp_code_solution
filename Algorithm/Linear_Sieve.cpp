@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
-#define N 20000000
+#define N 1
+000
 using namespace std;
 
 bitset<N + 1> notprime = 3;
@@ -30,4 +31,5 @@ int main()
     }
     b = clock();
     cout << b - a << " ms.";
+    cout << prime.size() << '\n';
 }
