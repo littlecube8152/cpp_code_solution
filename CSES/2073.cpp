@@ -45,27 +45,33 @@ struct custom_hash
 
 mt19937 rd(chrono::steady_clock::now().time_since_epoch().count());
 
-bool random(int left, int right)
-{
-    return (abs((ll)rd()) % (left + right) < left);
-}
-
 struct treap
 {
     int pri, size;
     char c;
+    bool inv;
     treap *l, *r;
-
-    treap(char c) : pri(rd()), size(1), c(c), l(nullptr), r(nullptr){};
-    treap() : pri(rd()), size(1), c(' '), l(nullptr), r(nullptr){};
-
+    treap() : pri(rd()), size(1), c(95), inv(0), l(nullptr), r(nullptr){};
+    treap(char c) : pri(rd()), size(1), c(c), inv(0), l(nullptr), r(nullptr){};
+    void push()
+    {
+        if (inv)
+        {
+            swap(l, r);
+            if (l != nullptr)
+                l->inv ^= 1;
+            if (r != nullptr)
+                r->inv ^= 1;
+            inv = 0;
+        }
+    }
     void pull()
     {
         size = (l == nullptr ? 0 : l->size) + (r == nullptr ? 0 : r->size) + 1;
     }
-
     void print()
     {
+        push();
         if (l != nullptr)
             l->print();
         cout << c;
@@ -76,33 +82,24 @@ struct treap
 
 void spilt(int cnt, treap *root, treap *&left, treap *&right)
 {
-    /*
-    cout << "spilt remain " << cnt << " root = ";
     if (root == nullptr)
-        cout << "_";
-    else
-        root->print();
-    cout << '\n';
-    */
-
-    if (root == nullptr)
-    {
         left = right = nullptr;
-        return;
-    }
-    int lsize = (root->l != nullptr ? root->l->size : 0);
-    //cout << "lsize = " << lsize << " rsize = " << rsize << '\n';
-    if (cnt >= lsize + 1)
-    {
-        left = root;
-        spilt(cnt - lsize - 1, left->r, left->r, right);
-        left->pull();
-    }
     else
     {
-        right = root;
-        spilt(cnt, right->l, left, right->l);
-        right->pull();
+        root->push();
+        int lsize = 1 + (root->l == nullptr ? 0 : root->l->size);
+        if (cnt >= lsize)
+        {
+            left = root;
+            spilt(cnt - lsize, left->r, left->r, right);
+            left->pull();
+        }
+        else
+        {
+            right = root;
+            spilt(cnt, right->l, left, right->l);
+            right->pull();
+        }
     }
 }
 
@@ -114,12 +111,14 @@ treap *merge(treap *left, treap *right)
         return left;
     if (left->pri < right->pri)
     {
+        left->push();
         left->r = merge(left->r, right);
         left->pull();
         return left;
     }
     else
     {
+        right->push();
         right->l = merge(left, right->l);
         right->pull();
         return right;
@@ -144,8 +143,9 @@ signed main()
         treap *left, *mid, *right;
         spilt(a - 1, root, left, mid);
         spilt(b - a + 1, mid, mid, right);
-        left = merge(left, right);
-        root = merge(left, mid);
+        mid->inv ^= 1;
+        left = merge(left, mid);
+        root = merge(left, right);
     }
     root->print();
     cout << '\n';

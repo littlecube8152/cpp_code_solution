@@ -11,7 +11,7 @@
           "-Wall",
           "-Wextra",
           "-g",
-          "\"-Wl,--stack,419430400\"",
+          
           "-fsigned-char",
           "-std=gnu++17",
           "-D_GLIBCXX_DEBUG",

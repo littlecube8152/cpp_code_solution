@@ -6,7 +6,7 @@
 //  Segment Tree is hard.
 */
 #pragma GCC optimize("O3,unroll-loops")
-#include <bits/extc++.h>
+//#include <bits/extc++.h>
 #include <bits/stdc++.h>
 //#pragma pack(0)
 #define int long long
