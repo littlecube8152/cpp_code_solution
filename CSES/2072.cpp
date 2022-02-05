@@ -76,15 +76,6 @@ struct treap
 
 void spilt(int cnt, treap *root, treap *&left, treap *&right)
 {
-    /*
-    cout << "spilt remain " << cnt << " root = ";
-    if (root == nullptr)
-        cout << "_";
-    else
-        root->print();
-    cout << '\n';
-    */
-
     if (root == nullptr)
     {
         left = right = nullptr;
