@@ -43,23 +43,42 @@ struct custom_hash
     }
 };
 
-int n, m, epre[200005], pre[200005], low[200005], in[200005], t;
-pii e[200005];
-vector<pii> E[200005];
+int n, m, u[200005], v[200005], dis[200005], pre[200005], jump[200005], vis[200005];
+vector<int> ans;
+vector<pii> E[100005];
 
-signed main()
+void dfs(int a)
 {
-    //fast;
+    vis[a] = 1;
+    for(auto [b, i] : E[a])
+        if(!vis[b])
+        {
+            pre[b] = i;
+            dis[b] = dis[a] + 1;
+            dfs(b);
+            jump[a] += jump[b];
+        }
+        else if(i != pre[a] && dis[b] < dis[a])
+        {
+            jump[a]++;
+            jump[b]--;
+        }
+    if(jump[a] == 0 && a != 1)
+        ans.emplace_back(pre[a]);
+}
+
+    signed main()
+{
+    fast;
     cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        cin >> e[i].F >> e[i].S;
-        E[e[i].F].emplace_back(pii{e[i].S, i});
-        E[e[i].S].emplace_back(pii{e[i].F, i});
+        cin >> u[i] >> v[i];
+        E[u[i]].emplace_back(pii{v[i], i});
+        E[v[i]].emplace_back(pii{u[i], i});
     }
     dfs(1);
-    
-    for (int i = 2; i <= n; i++)
-        if(in[i] <= low[i])
-            
+    cout << ans.size() << '\n';
+    for(int i : ans)
+        cout << u[i] << ' ' << v[i] << '\n';
 }

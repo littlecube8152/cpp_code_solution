@@ -1,6 +1,6 @@
 /*  | |       _    _  | |        _____       | |
 //  | |   _  | |  | | | | _____ /  ___|__  __| |___  _____
-//  | |  |_|[   ][   ]| |/  _  \| |    | | | |  _  \/  _  \  
+//  | |  |_|[   ][   ]| |/  _  \| |    | | | |  _  \/  _  \
 //  | L__| | | |_ | |_| || ____|| |___ | |_| | |_| || ____|
 //  L____|_| |___||___|_|\_____|\_____|\_____/\____/\_____|
 //  Segment Tree is hard.
@@ -59,25 +59,18 @@ struct custom_hash
     }
 };
 
-ll n, k, arr[200005], pre[200005], ans;
-tree<pll, null_type, less<pll>, rb_tree_tag, tree_order_statistics_node_update> bstree;
+ll n, k, arr[200005], pre[200005], cnt[200005], ans;
 signed main()
 {
     fast;
     cin >> n;
+    cnt[0] = 1;
     for (int i = 1; i <= n; i++)
     {
         cin >> arr[i];
-        pre[i] = ((arr[i] + pre[i - 1]) % n + n) % n;
-        bstree.insert({pre[i], i});
-    }
-    bstree.insert({0, 0});
-    for (int i = 0; i <= n; i++)
-    {
-        bstree.erase({pre[i], i});
-        ans += bstree.order_of_key({0 + pre[i], n + 1}) - bstree.order_of_key({0 + pre[i], -1});
-        ans += bstree.order_of_key({n + pre[i], n + 1}) - bstree.order_of_key({n + pre[i], -1});
-        ans += bstree.order_of_key({-n + pre[i], n + 1}) - bstree.order_of_key({-n + pre[i], -1});
+        pre[i] = arr[i] + pre[i - 1];
+        ans += cnt[((pre[i]) % n + n) % n];
+        cnt[((pre[i]) % n + n) % n]++;
     }
     cout << ans;
 }

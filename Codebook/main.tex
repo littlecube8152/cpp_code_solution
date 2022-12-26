@@ -1,0 +1,123 @@
+% !TEX root = ./main.tex
+
+\documentclass[10pt,a4paper,twocolumn,oneside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{fontspec}
+\setmainfont[BoldFont=consolab.ttf]{CONSOLA.ttf}
+\setmonofont[BoldFont=consolab.ttf]{CONSOLA.ttf}
+\usepackage{sectsty}
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\normalsize\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\small\bfseries}{\thesubsection}{1em}{}
+\titlespacing\section{0pt}{4pt plus 4pt minus 2pt}{0pt plus 4pt minus 2pt}
+\titlespacing\subsection{0pt}{4pt plus 4pt minus 2pt}{0pt plus 4pt minus 2pt}
+
+\usepackage{geometry}
+\marginparsep=0pt
+\marginparwidth=0pt
+\topmargin=0pt
+\oddsidemargin=0pt
+\evensidemargin=0pt
+\textheight=750pt
+\textwidth=520pt
+\hoffset=-30pt
+\voffset=-50pt
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{Codebook}
+\fancyhead[R]{\thepage}
+\fancyfoot{}
+
+\usepackage{color}
+\usepackage[x11names]{xcolor}
+
+\usepackage{listings}
+\lstset{
+language=C++,
+basicstyle=\scriptsize\ttfamily, 					% the size of the fonts that are used for the code
+backgroundcolor=\color{white},						% choose the background color. You must add \usepackage{color}
+showspaces=false,									% show spaces adding particular underscores
+showstringspaces=false,								% underline spaces within strings
+showtabs=false,										% show tabs within strings adding particular underscores
+frame=false,										% adds a frame around the code
+tabsize=2,											% sets default tabsize to 2 spaces
+breaklines=true,									% sets automatic line breaking
+breakatwhitespace=false,							% sets if automatic breaks should only happen at whitespace
+morekeywords={constexpr,ll,pii,pll},				% if you want to add more keywords to the set
+keywordstyle=\bfseries\color{Blue1},
+commentstyle=\itshape\color{Green4},
+stringstyle=\itshape\color{Red4},
+}
+
+
+\begin{document}
+	\footnotesize
+	\tableofcontents
+	\setcounter{section}{-1}
+
+	\section{Basic}
+		\subsection{Compiling}
+			\lstinputlisting{./0_setup/compile.sh}
+		\subsection{.vimrc}
+			\lstinputlisting{./0_setup/.vimrc}
+		\subsection{spiltmix64}
+			\lstinputlisting[firstline=4]{./0_setup/spiltmix64.cpp}
+		\subsection{mt19937}
+			\lstinputlisting[firstline=4]{./0_setup/randomizer.cpp}
+		\subsection{PBDS}
+			\lstinputlisting[firstline=4]{./0_setup/PBDS.cpp}
+	\section{Graph}
+		\subsection{Dinic}
+			\lstinputlisting[firstline=9]{./1_graph/Dinic.cpp}
+	
+	\section{Data Structure}
+		\subsection{Treap}
+			\lstinputlisting[firstline=5]{./2_ds/Treap.cpp}
+
+	\section{Math}
+		\subsection{Eratosthenes Sieve}
+			\lstinputlisting[firstline=5]{./3_math/EratosthenesSieve.cpp}
+		\subsection{Linear Sieve}
+			\lstinputlisting[firstline=5]{./3_math/LinearSeive.cpp}
+		\subsection{Extended GCD}
+			\lstinputlisting[firstline=5]{./3_math/ExtendedGCD.cpp}
+		\subsection{FFT}
+			\lstinputlisting[firstline=6]{./3_math/FFT.cpp}
+		\subsection{NTT}
+			$p = 1004535809 = 479 \times 2^{21} + 1,\,g = 3$\par
+			$p = 998244353 = 119 \times 2^{23} + 1,\,g = 3$\par
+			$p = 9223372036737335297 = 54975513881 \cdot 2^{24} + 1, g = 3$\par
+			$\omega = g^{\frac{p-1}{n}}$
+	\section{Geometry}
+		\subsection{Basic}
+			\lstinputlisting[firstline=8]{./4_geometry/Basic.cpp}
+		\subsection{Minimum Euclidean Distance}
+			\lstinputlisting[firstline=53]{./4_geometry/MinimumEuclidean.cpp}
+		\subsection{Convex Hull}
+			\lstinputlisting[firstline=56]{./4_geometry/ConvexHull.cpp}
+		\subsection{Angle Sort}
+			\lstinputlisting[firstline=1]{./4_geometry/AngleSort.cpp}
+		\subsection{Pick's Theorem}
+			$A = I + \dfrac B 2 - 1$
+
+			Area $A$, lattice points on Boundary $B$, in interior $I$.
+	\section{String}	
+		\subsection{Primes}
+			$1000000021,\,1066636547,\,1111111121,\,1234567891,\,1800399103\\1820303297,\,2000000011,\,5681288813,\,21182087419$
+		\subsection{KMP}
+			\lstinputlisting[firstline=5]{./5_string/KMP.cpp}
+		\subsection{Z}
+			\lstinputlisting[firstline=6]{./5_string/Z.cpp}
+		\subsection{Manacher}
+			\lstinputlisting[firstline=4]{./5_string/Manacher.cpp}
+		\subsection{Minimum Rotation}
+			\lstinputlisting[firstline=4]{./5_string/MinimumRotation.cpp}
+		\subsection{Aho Corasick}
+			\lstinputlisting[firstline=5]{./5_string/AhoCorasick.cpp}
+		\subsection{Suffix Array}
+			\lstinputlisting[firstline=5]{./5_string/SuffixArray.cpp}
+\end{document}
+

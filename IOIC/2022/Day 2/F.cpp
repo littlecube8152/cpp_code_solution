@@ -44,24 +44,19 @@ int main()
     for (ll p = 0; p <= 31; p++)
     {
         ll L = 0, R = 8e18;
-        //cout << p << '\n';
         for (int i = 1; i <= N; i++)
         {
             L = max(L, (b[i] << p) - a[i]);
             R = min(R, ((b[i] << p) ^ ((1LL << p) - 1LL)) - a[i]);
-            //cout << L << " " << R << '\n';
         }
         if (R < L)
             continue;
         ll mid = ((L - 1) / (1LL << p) + 1) * (1LL << p), res;
 
-        //cout << p << " " << L << " " << mid << " " << R << "\n";
-
         if (mid > R || mid - 1 < L)
             res = solve(L, R, p) + p;
         else
             res = min(solve(L, mid - 1, p), solve(mid, R, p)) + p;
-        //cout << res << '\n';
         ans = min(ans, res);
     }
     if (ans >= 1e17)

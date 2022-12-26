@@ -60,22 +60,18 @@ struct custom_hash
 };
 
 ll n, k, arr[200005], pre[200005], ans;
-tree<pll, null_type, less<pll>, rb_tree_tag, tree_order_statistics_node_update> bstree;
+map<ll, int> mp;
 signed main()
 {
     fast;
     cin >> n >> k;
+    mp[0] = 1;
     for (int i = 1; i <= n; i++)
     {
         cin >> arr[i];
         pre[i] = arr[i] + pre[i - 1];
-        bstree.insert({pre[i], i});
-    }
-    bstree.insert({0, 0});
-    for (int i = 0; i <= n; i++)
-    {
-        bstree.erase({pre[i], i});
-        ans += bstree.order_of_key({k + pre[i], n + 1}) - bstree.order_of_key({k + pre[i], -1});
+        ans += mp[pre[i] - k];
+        mp[pre[i]]++;
     }
     cout << ans;
 }

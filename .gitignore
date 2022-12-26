@@ -1,11 +1,16 @@
-
 # Executables
 *.exe
 *.app
+*.gitignore
+*.sh
 
 # Temp Runner
 tempCodeRunnerFile.cpp
 tempCodeRunnerFile.exe
+
+# Vim
+*.swo
+*.swp
 
 # Problem Setting
 /Prob_Setting/*

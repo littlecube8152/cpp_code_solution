@@ -4,7 +4,6 @@ using namespace std;
 
 int main()
 {
-    
     // Set console code page to UTF-8 so console known how to interpret string data
     SetConsoleOutputCP(CP_UTF8);
 

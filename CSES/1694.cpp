@@ -1,6 +1,6 @@
 /*  | |       _    _  | |        _____       | |
 //  | |   _  | |  | | | | _____ /  ___|__  __| |___  _____
-//  | |  |_|[   ][   ]| |/  _  \| |    | | | |  _  \/  _  \  
+//  | |  |_|[   ][   ]| |/  _  \| |    | | | |  _  \/  _  \
 //  | L__| | | |_ | |_| || ____|| |___ | |_| | |_| || ____|
 //  L____|_| |___||___|_|\_____|\_____|\_____/\____/\_____|
 //  Segment Tree is hard.
@@ -22,93 +22,107 @@
 #define fast ios::sync_with_stdio(0), cin.tie(0)
 using namespace std;
 
-ll V, E, ans, s, t, adjptr[505], vis[505], dis[505];
-// {from, to, capacity}
-vector<pair<pii, ll>> e;
-vector<int> adj[505];
+ll V, E;
 
-bool bfs()
+template <int V>
+struct dinic
 {
-    for (int i = 1; i <= V; i++)
-        vis[i] = 0, dis[i] = V + 1;
-
-    queue<int> q;
-    q.push(s);
-    vis[s] = 1, dis[s] = 0;
-    while (!q.empty())
+    const ll INF = 1e18;
+    ll adjptr[V + 1], dis[V + 1], vis[V + 1], s, t, ans;
+    struct edge
     {
-        int u = q.front();
-        q.pop();
-        for (int i = 0; i < adj[u].size(); i++)
+        ll u, v, cap;
+    };
+    vector<edge> e;
+    vector<int> adj[V + 1];
+
+    bool bfs()
+    {
+        for (int i = 1; i <= V; i++)
+            dis[i] = (i == s ? 0 : V + 1);
+        queue<int> q;
+        q.push(s);
+        while (!q.empty())
         {
-            int v = e[adj[u][i]].F.S;
-            if (!vis[v] && e[adj[u][i]].S > 0)
+            int u = q.front();
+            q.pop();
+            for (auto id : adj[u])
             {
-                dis[v] = dis[u] + 1;
-                vis[v] = 1;
-                q.push(v);
+                auto [_, v, cap] = e[id];
+                if (dis[v] > V && cap > 0)
+                {
+                    dis[v] = dis[u] + 1;
+                    q.push(v);
+                }
             }
         }
+        return dis[t] <= V;
     }
-    if (dis[t] > V)
-        return false;
-    return true;
-}
 
-ll dfs(int k, ll flow)
-{
-    if(flow <= 0)
-        return 0;
-    if (k == t)
-        return flow;
-    for (; adjptr[k] < adj[k].size(); adjptr[k]++)
+    vector<pii> find_cut()
     {
-        int d = adj[k][adjptr[k]];
-        if (e[d].S <= 0)
-            continue;
-        else if (vis[e[d].F.S])
-            continue;
-        else if (dis[e[d].F.S] != dis[k] + 1)
-            continue;
-        vis[e[d].F.S] = 1;
-        ll f = dfs(e[d].F.S, min(flow, e[d].S));
-        if (f > 0)
-        {
-            e[d].S -= f;
-            e[d ^ 1].S += f;
-            return f;
-        }
+        vector<pii> cut;
+        bfs();
+        for (int i = 0; i < e.size(); i += 2)
+            if (dis[e[i].u] <= V && dis[e[i].v] > V)
+                cut.emplace_back(pii(e[i].u, e[i].v));
+        return cut;
     }
-    return 0;
-}
+    ll dfs(int u, ll flow)
+    {
+        if (u == t || !flow)
+            return flow;
+        for (; adjptr[u] < (int)adj[u].size(); adjptr[u]++)
+        {
+            int d = adj[u][adjptr[u]];
+            auto [_, v, cap] = e[d];
+            if (cap <= 0 || vis[v] || dis[v] != dis[u] + 1)
+                continue;
+            vis[v] = 1;
+            ll f = dfs(v, min(flow, cap));
+            if (f)
+            {
+                e[d].cap -= f, e[d ^ 1].cap += f;
+                return f;
+            }
+        }
+        return 0;
+    }
+    void add_edge(int u, int v, ll c)
+    {
+        adj[u].emplace_back(e.size());
+        e.emplace_back(edge{u, v, c});
+        adj[v].emplace_back(e.size());
+        e.emplace_back(edge{v, u, 0});
+    }
+    ll flow(int S, int T)
+    {
+        s = S, t = T;
+        for (int i = 0; i < (int)e.size(); i += 2)
+            e[i].cap = e[i].cap + e[i ^ 1].cap, e[i ^ 1].cap = 0;
+        while (bfs())
+        {
+            for (int i = 1; i <= V; i++)
+                adjptr[i] = 0, vis[i] = 0;
+            ll f = 1;
+            while (f)
+                ans += (f = dfs(s, INF));
+        }
+        return ans;
+    }
+};
 
 signed main()
 {
-    //fast;
+    // fast;
     cin >> V >> E;
+    dinic<501> flow;
     for (int i = 1; i <= E; i++)
     {
         ll u, v, c;
         cin >> u >> v >> c;
-        adj[u].emplace_back(e.size());
-        e.emplace_back(pair<pii, ll>{{u, v}, c});
-        adj[v].emplace_back(e.size());
-        e.emplace_back(pair<pii, ll>{{v, u}, 0});
+        flow.add_edge(u, v, c);
     }
-    s = 1, t = V;
-    while (bfs())
-    {
-        for (int i = 1; i <= V; i++)
-            adjptr[i] = 0;
-        while (true)
-        {
-            for (int i = 1; i <= V; i++)
-                vis[i] = 0;
-            ll f = dfs(s, 1e10);
-            ans += f;
-            if (f == 0)
-                break;
-        }
-    }
-    cout << ans << '\n';
+
+    cout << flow.flow(1, V) << '\n';
 }
