@@ -6,10 +6,10 @@
 //  Segment Tree is hard.
 */
 #pragma GCC optimize("O3,unroll-loops")
-//#include <bits/extc++.h>
+// #include <bits/extc++.h>
 #include <bits/stdc++.h>
-//#pragma pack(0)
-//#define int long long
+// #pragma pack(0)
+// #define int long long
 #define ll long long
 #define pii pair<int, int>
 #define pdd pair<double, double>
@@ -57,19 +57,24 @@ struct custom_hash
     }
 };
 
-ll dp[21][21];
+const ll mod = 998244353;
+ll N, K, fac[300005], ifac[300005], p2[300005], Kfac = 1, ans;
 
 signed main()
 {
     fast;
-    int N, K;
     cin >> N >> K;
-    dp[0][1] = 1;
-    for (int i = 0; i < N; i++)
-        for (int j = 1; j <= K; j++)
-            for (int k = 1; k <= K - j; k++)
-                dp[i + 1][j + k] += dp[i][j] * (k + 1);
-    for (int i = 1; i <= N; i++)
-        for (int j = 1; j <= K; j++)
-            cout << dp[i][j] * pow(2, i) << " \n"[j == K];
+    fac[0] = ifac[0] = ifac[1] = p2[0] = 1;
+    for (int i = 2; i <= N + 1; i++)
+        ifac[i] = (mod - mod / i) * ifac[mod % i] % mod;
+    for (int i = 1; i <= N + 1; i++)
+        fac[i] = fac[i - 1] * i % mod,
+        ifac[i] = ifac[i - 1] * ifac[i] % mod,
+        p2[i] = p2[i - 1] * 2 % mod;
+    for (int i = 0; i <= N; i++)
+    {
+        Kfac = Kfac * ((K + 1 - i) % mod) % mod;
+        ans = ans + fac[N] * ifac[i] % mod * ifac[N - i] % mod * Kfac % mod * ifac[i + 1] % mod * p2[i] % mod;
+    }
+    cout << ans % mod << '\n';
 }
