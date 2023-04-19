@@ -18,9 +18,8 @@ priority_queue<int, vector<int>, COMP> pq;
 
 signed main()
 {
-    ///Dijkstra Ford SSSP
-    cin >>
-        n >> m;
+    /// Dijkstra SSSP
+    cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
         dis[i] = INF;

@@ -24,28 +24,58 @@ signed main()
     ifstream cin("angry.in");
     ofstream cout("angry.out");
     cin >> n;
-    v.resize(n);
-    for (int i = 0; i < n; i++)
+    v.resize(n + 1);
+    for (int i = 1; i <= n; i++)
         cin >> v[i];
     sort(v.begin(), v.end());
-    unique(v.begin(), v.end());
 
-    ldp.resize(v.size());
-    ldp[0] = 0;
-    for (int i = 1; i < v.size(); i++)
-        ldp[i] = max(ldp[i - 1] + 1, v[i] - v[i - 1]);
+    ldp.resize(n + 1);
+    ldp[1] = 0;
+    for (int i = 2; i <= n; i++)
+    {
+        int L = 1, R = i - 1;
+        while (R - L > 1)
+        {
+            int mid = (L + R) / 2;
+            if (ldp[mid] + 1 <= v[i] - v[mid])
+                L = mid;
+            else
+                R = mid;
+        }
+        ldp[i] = min(max(ldp[L] + 1, v[i] - v[L]), max(ldp[R] + 1, v[i] - v[R]));
+    }
 
-    reverse(v.begin(), v.end());
+    rdp.resize(n + 1);
+    rdp[n] = 0;
+    for (int i = n - 1; i >= 1; i--)
+    {
+        int L = i + 1, R = n;
+        while (R - L > 3)
+        {
+            int mid = (L + R) / 2;
+            if (rdp[mid] + 1 <= v[mid] - v[i])
+                R = mid;
+            else
+                L = mid;
+        }
+        rdp[i] = 1e9;
+        for (int j = L; j <= R; j++)
+            rdp[i] = min(max(rdp[j] + 1, v[j] - v[i]), rdp[i]);
+    }
+    for (int i = 2; i <= n; i++)
+    {
+        int L = 1, R = i - 1;
+        while (R - L > 3)
+        {
+            int mid = (L + R) / 2;
+            if (ldp[mid] <= (v[i] - v[mid]) / 2.0)
+                L = mid;
+            else
+                R = mid;
+        }
+        for (int j = L; j <= R; j++)
+            ans = min(ans, max({rdp[i] * 1.0 + 1, ldp[j] * 1.0 + 1, (v[i] - v[j]) / 2.0}));
+    }
 
-    rdp.resize(v.size());
-    rdp[0] = 0;
-    for (int i = 1; i < v.size(); i++)
-        rdp[i] = max(rdp[i - 1] + 1, v[i - 1] - v[i]);
-
-    reverse(v.begin(), v.end());
-    reverse(rdp.begin(), rdp.end());
-
-    for (int i = 1; i < v.size(); i++)
-        ans = min(ans, max({ldp[i - 1] + 1.0, rdp[i] + 1.0, (v[i] - v[i - 1]) / 2.0}));
     cout << fixed << setprecision(1) << ans << '\n';
 }

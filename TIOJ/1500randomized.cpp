@@ -52,12 +52,12 @@ pll operator+(pll p1, pll p2)
 void solve()
 {
     unordered_map<pll, int, custom_hash> table;
-
+    mt19937 rd(chrono::steady_clock::now().time_since_epoch().count());
     v.resize(N + 1);
     point.resize(N + 1);
     for (int i = 1; i <= N; i++)
         cin >> v[i].F >> v[i].S;
-    random_shuffle(v.begin() + 1, v.end());
+    shuffle(v.begin() + 1, v.end(), rd);
 
     ld ans = dis(v[1], v[2]);
     point[1] = table[point_hash(v[1], ans)];
