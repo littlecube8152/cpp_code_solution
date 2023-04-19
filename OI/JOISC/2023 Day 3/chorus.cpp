@@ -1,0 +1,11 @@
+/*
+N = 4
+K = 1
+AAAABBBB
+
+K = 2
+AAABBBAB
+AABABBAB
+* ** 
+
+*/

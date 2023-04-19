@@ -7,56 +7,90 @@ using namespace std;
 
 namespace
 {
-    int N;
-    vector<int> receive, S, T, D;
+    int N, d[2000] = {}, cnt = 0, ld = 0, u = 0, T, dA, dB;
+    int phase; // 1: receive distance, 2: receive node
+    bool vis[2000] = {};
+    vector<pii> E[2000];
+    vector<int> receive;
+
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+
+    void send(int message, int bit)
+    {
+        for (int i = bit - 1; i >= 0; i--)
+            SendB((message >> i) & 1);
+    }
+
+    void calcNext()
+    {
+        cerr << "calcNextB " << u << ' ' << ld << '\n';
+        T--;
+        vis[u] = 1;
+        d[u] = ld;
+        for (auto [v, w] : E[u])
+            if (d[u] + w < d[v])
+            {
+                d[v] = d[u] + w;
+                pq.push(pii(d[v], v));
+            }
+        if (T)
+        {
+            while (!pq.empty() && vis[pq.top().S])
+                pq.pop();
+            if (!pq.empty())
+                u = pq.top().S, dA = 0, dB = d[u] - ld;
+            else
+                u = 0, dA = 0, dB = 511;
+            send(dB, 9);
+            phase = 1;
+        }
+    }
+
+    void check_distance()
+    {
+        for (int b = 0; b < 9; b++)
+            dA = dA * 2 + receive[b];
+        receive.clear();
+        if (dA <= dB)
+            phase = 2;
+        else
+        {
+            send(u, 11);
+            ld += dB;
+            calcNext();
+        }
+    }
+
+    void update_distance()
+    {
+        u = 0;
+        ld += dA;
+        for (int b = 0; b < 11; b++)
+            u = u * 2 + receive[b];
+        receive.clear();
+        calcNext();
+    }
 }
 
 void InitB(int N, int B, vector<int> S, vector<int> T, vector<int> D)
 {
     ::N = N;
-    ::S = S;
-    ::T = T;
-    ::D = D;
+    ::T = N;
+    for (int i = 1; i < N; i++)
+        d[i] = 1'000'000'000;
+    for (int i = 0; i < B; i++)
+    {
+        E[S[i]].emplace_back(pii(T[i], D[i]));
+        E[T[i]].emplace_back(pii(S[i], D[i]));
+    }
+    calcNext();
 }
 
 void ReceiveB(bool y)
 {
-    if (y)
-    {
-        vector<int> dis(N, 1'000'000'000);
-        vector<pii> E[2000];
-        dis[0] = 0;
-        for (int i = 0; i < S.size(); i++)
-        {
-            E[S[i]].emplace_back(pii(T[i], D[i]));
-            E[T[i]].emplace_back(pii(S[i], D[i]));
-        }
-        priority_queue<pii, vector<pii>, greater<pii>> pq;
-        pq.push(pii(0, 0));
-        while (!pq.empty())
-        {
-            auto [d, u] = pq.top();
-            pq.pop();
-            if (d > dis[u])
-                continue;
-            for (auto [v, w] : E[u])
-                if (d + w < dis[v])
-                {
-                    dis[v] = d + w;
-                    pq.push(pii(dis[v], v));
-                }
-        }
-        for (int i = 0; i < N; i++)
-            for (int p = 19; p >= 0; p--)
-                SendB((dis[i] >> p) & 1);
-    }
-    else
-    {
-        for (int i = 0; i < S.size(); i++)
-        {
-            long long cur = S[i] * 2000LL * 500 + T[i] * 500 + D[i] - 1;
-            for (int p = 31; p >= 0; p--)
-                SendB((cur >> p) & 1);
-        }
-    }
+    receive.emplace_back(y);
+    if (receive.size() == 9 && phase == 1)
+        check_distance();
+    if (receive.size() == 11 && phase == 2)
+        update_distance();
 }

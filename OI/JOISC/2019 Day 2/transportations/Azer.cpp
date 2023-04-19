@@ -7,71 +7,99 @@ using namespace std;
 
 namespace
 {
-    int N;
-    bool state;
-    vector<int> receive, U, V, C;
-} // namespace
+    int N, d[2000] = {}, cnt = 0, ld = 0, u = 0, T, dA, dB;
+    int phase; // 1: receive distance, 2: receive node
+    bool vis[2000] = {};
+    vector<pii> E[2000];
+    vector<int> receive;
+
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+
+    void send(int message, int bit)
+    {
+        for (int i = bit - 1; i >= 0; i--)
+            SendA((message >> i) & 1);
+    }
+
+    void calcNext()
+    {
+        cerr << "calcNextA " << u << ' ' << ld << '\n';
+        T--;
+        vis[u] = 1;
+        d[u] = ld;
+        for (auto [v, w] : E[u])
+            if (d[u] + w < d[v])
+            {
+                d[v] = d[u] + w;
+                pq.push(pii(d[v], v));
+            }
+        if (T)
+        {
+            while (!pq.empty() && vis[pq.top().S])
+                pq.pop();
+            if (!pq.empty())
+                u = pq.top().S, dA = d[u] - ld, dB = 0;
+            else
+                u = 0, dA = 511, dB = 0;
+            send(dA, 9);
+            phase = 1;
+        }
+    }
+
+    void check_distance()
+    {
+        for (int b = 0; b < 9; b++)
+            dB = dB * 2 + receive[b];
+        receive.clear();
+        if (dB < dA)
+            phase = 2;
+        else
+        {
+            send(u, 11);
+            ld += dA;
+            calcNext();
+        }
+    }
+
+    void update_distance()
+    {
+        u = 0;
+        ld += dB;
+        for (int b = 0; b < 11; b++)
+            u = u * 2 + receive[b];
+        receive.clear();
+        calcNext();
+    }
+
+}
 
 void InitA(int N, int A, vector<int> U, vector<int> V, vector<int> C)
 {
     ::N = N;
-    ::U = U;
-    ::V = V;
-    ::C = C;
-    SendA(state = U.empty());
+    ::T = N;
+    for (int i = 1; i < N; i++)
+        d[i] = 1'000'000'000;
+    for (int i = 0; i < A; i++)
+    {
+        E[U[i]].emplace_back(pii(V[i], C[i]));
+        E[V[i]].emplace_back(pii(U[i], C[i]));
+    }
+    calcNext();
 }
 
 void ReceiveA(bool x)
 {
     receive.emplace_back(x);
+    if (receive.size() == 9 && phase == 1)
+        check_distance();
+    if (receive.size() == 11 && phase == 2)
+        update_distance();
 }
 
 std::vector<int> Answer()
 {
     vector<int> ans(N);
-    if (state)
-    {
-        for (int i = 0; i < N; i++)
-            for (int p = 0; p < 20; p++)
-                ans[i] = ans[i] * 2 + receive[i * 20 + p];
-    }
-    else
-    {
-        for (int i = 0; i < receive.size() / 32; i++)
-        {
-            long long cur = 0;
-            for (int p = 0; p < 32; p++)
-                cur = cur * 2 + receive[i * 32 + p];
-            // cerr << i << ' ' << (cur / 500 / 2000) << ' ' << (cur / 500 % 2000) << ' ' << (cur % 500 + 1) << '\n';
-            U.emplace_back(cur / 500 / 2000);
-            V.emplace_back(cur / 500 % 2000);
-            C.emplace_back(cur % 500 + 1);
-        }
-
-        vector<int> dis(N, 1'000'000'000);
-        vector<pii> E[2000];
-        dis[0] = 0;
-        for (int i = 0; i < U.size(); i++)
-        {
-            E[U[i]].emplace_back(pii(V[i], C[i]));
-            E[V[i]].emplace_back(pii(U[i], C[i]));
-        }
-        priority_queue<pii, vector<pii>, greater<pii>> pq;
-        pq.push(pii(0, 0));
-        while (!pq.empty())
-        {
-            auto [d, u] = pq.top();
-            pq.pop();
-            if (d > dis[u])
-                continue;
-            for (auto [v, w] : E[u])
-                if (d + w < dis[v])
-                {
-                    dis[v] = d + w;
-                    pq.push(pii(dis[v], v));
-                }
-        }
-        ans = dis;
-    }
+    for (int i = 0; i < N; i++)
+        ans[i] = d[i];
     return ans;
 }

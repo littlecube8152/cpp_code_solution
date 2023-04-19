@@ -29,10 +29,10 @@ void WrongAnswer(int code) {
 }  // namespace
 
 int Query(const std::vector<int> &p) {
-  cerr << "Query: ";
-  for(auto i : p)
-	  cerr << i << ' ';
-  cerr << " = ";
+  //cerr << "Query: ";
+  //for(auto i : p)
+  //	  cerr << i << ' ';
+  //cerr << " = ";
   if (++query_count > Q_MAX) WrongAnswer(3);
   bool presents[N_MAX * 2 + 1];
   for (int i = 1; i <= N * 2; ++i) presents[i] = false;
@@ -52,7 +52,7 @@ int Query(const std::vector<int> &p) {
       colors[color] = true;
     }
   }
-  cerr << color_count << '\n';
+  //cerr << color_count << '\n';
   return color_count;
 }
 
@@ -68,28 +68,32 @@ void Answer(int a, int b) {
 }
 
 int main() {
-  if (scanf("%d", &N) != 1) {
+  
+ if (scanf("%d", &N) != 1) {
     fprintf(stderr, "Error while reading input.\n");
     exit(1);
   }
   for (int i = 1; i <= N * 2; ++i) {
-    if (scanf("%d", &Y[i]) != 1) {
+   /*if (scanf("%d", &Y[i]) != 1) {
       fprintf(stderr, "Error while reading input.\n");
       exit(1);
-    }
+    }*/
+	Y[i] = (i <= N ? 0 : 1);
   }
   for (int i = 1; i <= N * 2; ++i) {
-    if (scanf("%d", &C[i]) != 1) {
+    /*if (scanf("%d", &C[i]) != 1) {
       fprintf(stderr, "Error while reading input.\n");
       exit(1);
-    }
+    }*/
+	C[i] = (i + 1) / 2;
   }
   for (int i = 1; i <= N * 2; ++i) {
-    if (scanf("%d", &L[i]) != 1) {
+    /*if (scanf("%d", &L[i]) != 1) {
       fprintf(stderr, "Error while reading input.\n");
       exit(1);
-    }
-  }
+    }*/
+	L[i] = (i + 1) % (2 * N) + 1;
+  }  
   for (int i = 1; i <= N * 2; ++i) finishes[i] = false;
   Solve(N);
   if (answer_count != N) WrongAnswer(7);
