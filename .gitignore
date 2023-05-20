@@ -15,3 +15,8 @@ tempCodeRunnerFile.exe
 # Problem Setting
 /Prob_Setting/*
 /Prob_Setting/
+
+/3nhypercube.cpp
+/parse_edge.cpp
+/right.txt
+/left.txt
