@@ -1,0 +1,64 @@
+right
+continue:
+pebble continueLeft
+jump answerLeft
+continueLeft:
+get
+right
+move
+put
+right
+right
+move
+right
+move
+right
+right
+pebble continueRight
+jump answerRight
+continueRight:
+get
+left
+move
+put
+right
+right
+move
+left
+move
+right
+right
+jump continue
+
+leftContinue:
+right
+right
+pebble leftHas
+jump leftFinish
+leftHas:
+get
+move
+put
+right
+right
+move
+pebble leftContinue
+leftFinish:
+
+left
+move
+left
+rightContinue:
+right
+right
+pebble rightHas
+jump rightFinish
+rightHas:
+get
+move
+put
+right
+right
+move
+pebble rightContinue
+rightFinish:

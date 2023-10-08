@@ -1,0 +1,10 @@
+right
+jump start
+continue:
+get
+move
+right
+right
+start:
+pebble continue
+halt

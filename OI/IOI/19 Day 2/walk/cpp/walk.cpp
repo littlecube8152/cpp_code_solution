@@ -29,7 +29,7 @@ ll min_distance(vector<int> x, vector<int> h, vector<int> l, vector<int> r, vect
 		{
 			ll dis = 1e18;
 			auto iter = st.lower_bound(pll(j, 0));
-			if (iter != st.end())
+			if (iter != st.end() && iter->F <= h[i])
 				dis = min(dis, iter->S + abs(j - iter->F));
 			if (iter != st.begin())
 			{

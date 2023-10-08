@@ -1,124 +1,229 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define pii pair<int, int>
-#define pll pair<ll, ll>
+#define piii tuple<int, int, int>
 #define F first
 #define S second
 using namespace std;
 
-int N, K, a[240005], b[240005], dsu[120005], rk[120005], aca[240005], acb[240005], ans[240005], cur[120005];
-vector<int> Q[120005];
-map<int, int> mp[240005];
-vector<pii> undo;
-char t[240005];
+int N, K, pre[120005][20], vis[120005], sz[120005], head[120005][20], ts;
+pii io[120005], bin[120005][20], e[120005];
+piii Q[120005];
+vector<piii> update[120005];
+vector<pii> E[120005];
 
-int find(int k)
+struct BIT
 {
-	return dsu[k] == k ? k : find(dsu[k]);
-}
-
-void merge(int x, int y, int tag = 0)
-{
-	int rx = find(x), ry = find(y);
-	if(rx == ry)
-		return;
-	if(rk[rx] <= rk[ry])
+	vector<int> bit;
+	vector<int> vals;
+	int id(int i, int p = 0)
 	{
-		dsu[rx] = ry;
-		rk[ry] += rk[rx];
-		if(tag)
-		{	
-			Q[ry].emplace_back(tag);
-			aca[tag] = rx;
-			acb[tag] = ry;
-		}
-		else 
-			undo.emplace_back(pii(rx, ry));
+		return max(0, (int)(lower_bound(vals.begin(), vals.end(), i, greater<>()) - vals.begin()) + p);
 	}
-	else
+	void init(vector<int> val)
 	{
-		dsu[ry] = rx;
-		rk[rx] += rk[ry];
-		if(tag)
-		{	
-			Q[rx].emplace_back(tag);
-			aca[tag] = rx;
-			acb[tag] = ry;
-		}
-		else 
-			undo.emplace_back(pii(ry, rx));
-
+		val.emplace_back(N + 8);
+		val.emplace_back(N);
+		val.emplace_back(-7);
+		val.emplace_back(-8);
+		sort(val.begin(), val.end(), greater<>());
+		vals = val;
+		bit.resize(vals.size(), 0);
 	}
-}
-
-void rollback(int t)
-{
-	while(undo.size() > t)
+	int query(int k, int p)
 	{
-		auto [x, y] = undo.back();
-		undo.pop_back();
-		dsu[x] = x;
-		rk[y] -= rk[x];
+		int ans = 0;
+		for (int i = id(k, p); i; i -= (i & -i))
+			ans += bit[i];
+		return ans;
 	}
-}
-
-void solve(int k)
-{
-	int sz = undo.size();
-	while(!Q[k].empty())
+	void modify(int k)
 	{
-		int i = Q[k].back();
-		Q[k].pop_back();
-		if(t[i] == 'S')
+		for (int i = id(k); i < (int)bit.size(); i += (i & -i))
+			bit[i]++;
+	}
+} bit[120005];
+
+void calcsz(int u)
+{
+	vis[u] = sz[u] = 1;
+	for (auto [v, w] : E[u])
+		if (!vis[v])
 		{
-			merge(a[i], b[i]);
-			solve(aca[i]);
-			solve(acb[i]);
-			break;	
+			calcsz(v);
+			sz[u] += sz[v];
 		}
-		else if(t[i] == 'Q')
-			ans[i] = (find(a[i]) == find(b[i]));
+	vis[u] = 0;
+}
+
+void init(int u, int p, int t, int c, int l)
+{
+	head[u][l] = c;
+	if (p < N)
+		update[p].emplace_back(piii(c, l, t));
+	vis[u] = 1;
+	for (auto [v, w] : E[u])
+		if (!vis[v])
+			init(v, (p < w ? w : N), t, c, l);
+	vis[u] = 0;
+}
+
+void cdec(int r, int l)
+{
+	int c = r;
+	calcsz(r);
+	{
+		int u = r;
+		do
+		{
+			c = u;
+			for (auto [v, _] : E[u])
+				if (sz[u] > sz[v] && sz[v] > sz[r] / 2)
+				{
+					u = v;
+					break;
+				}
+		} while (u != c);
 	}
-	rollback(sz);
+	vector<int> v;
+	head[c][l] = c;
+	vis[c] = 1;
+	for (auto [u, w] : E[c])
+		if (!vis[u])
+		{
+			v.emplace_back(w);
+			init(u, w, w, c, l);
+		}
+	bit[c].init(v);
+	bit[c].modify(N);
+	for (auto [u, w] : E[c])
+		if (!vis[u])
+			cdec(u, l + 1);
+}
+
+const pii no = {-8, -8},
+		  bad = {-2, -2};
+pii merge(pii p, pii q)
+{
+	if (p == no)
+		return q;
+	if (q == no)
+		return p;
+	if (p == bad || q == bad)
+		return bad;
+	if (p.F <= p.S && p.S <= q.F && q.F <= q.S)
+		return pii(p.F, q.S);
+	if (p.F >= p.S && p.S >= q.F && q.F >= q.S)
+		return pii(p.F, q.S);
+	return bad;
+}
+
+void dfs(int u)
+{
+	io[u].F = ++ts;
+	for (auto [v, w] : E[u])
+		if (v != pre[u][0])
+		{
+			pre[v][0] = u;
+			bin[v][0] = pii(w, w);
+			for (int p = 0; p + 1 < 20; p++)
+				pre[v][p + 1] = pre[pre[v][p]][p],
+						   bin[v][p + 1] = merge(bin[v][p], bin[pre[v][p]][p]);
+			dfs(v);
+		}
+	io[u].S = ts;
+}
+
+bool ischild(int r, int c)
+{
+	return io[r].F <= io[c].F && io[c].S <= io[r].S;
+}
+
+pii getpath(int u, int v)
+{
+	pii l = no, r = no;
+
+	for (int p = 19; p >= 0; p--)
+		if (!ischild(pre[u][p], v))
+			l = merge(l, bin[u][p]), u = pre[u][p];
+	if (!ischild(u, v))
+		l = merge(l, bin[u][0]), u = pre[u][0];
+
+	for (int p = 19; p >= 0; p--)
+		if (!ischild(pre[v][p], u))
+			r = merge(r, bin[v][p]), v = pre[v][p];
+	if (!ischild(v, u))
+		r = merge(r, bin[v][0]), v = pre[v][0];
+
+	swap(r.F, r.S);
+
+	return merge(l, r);
 }
 
 signed main()
 {
 	cin >> N >> K;
-	K += N - 1;
-	for(int i = 1; i <= K; i++)
+	for (int i = 0, j = 0; i + j < K + N - 1;)
 	{
-		cin >> t[i];
-		if(t[i] == 'C')
-			cin >> a[i];
-		else
-			cin >> a[i] >> b[i];
-	}	
-	for(int i = 1; i <= N; i++)
-		dsu[i] = i, cur[i] = rk[i] = 1;
-	for(int i = K; i >= 1; i--)
-	{
-		if(t[i] == 'S')
-		{	
-			merge(a[i], b[i], i);
-			cur[a[i]] += cur[b[i]];
-			cur[b[i]] = cur[a[i]];
+		char c;
+		int a, b = 0;
+		cin >> c >> a;
+		if (c != 'C')
+			cin >> b;
+
+		if (c == 'S')
+		{
+			j++;
+			e[j] = pii(a, b);
+			E[a].emplace_back(pii(b, j));
+			E[b].emplace_back(pii(a, j));
 		}
-		else if(t[i] == 'C')
-			ans[i] = cur[a[i]];
 		else
 		{
-			int r = find(a[i]);
-			Q[r].emplace_back(i);
+			i++;
+			Q[i] = piii(j, a, b);
 		}
 	}
-	int r = find(1);
-	for(int i = 1; i <= N; i++)
-		dsu[i] = i, rk[i] = 1;
-	solve(r);
-	for(int i = 1; i <= K; i++)
-		if(t[i] == 'C')
-			cout << ans[i] << '\n';
-		else if(t[i] == 'Q')
-			cout << (ans[i] ? "yes\n" : "no\n");
+	for (int p = 0; p < 20; p++)
+		pre[1][p] = 1, bin[1][p] = no;
+	dfs(1);
+	cdec(1, 1);
+	for (int i = 1, j = 0; i <= K; i++)
+	{
+		auto [t, a, b] = Q[i];
+		while (j < t)
+		{
+			j++;
+			for (auto [c, l, w] : update[j])
+			{
+				// cerr << "update " << j << ' ' << c << ' ' << w << '\n';
+				bit[c].modify(w);
+			}
+		}
+		if (b > 0)
+		{
+			int u = a, v = b;
+			pii l = no, r = no;
+
+			// cerr << merge(l, r).F << ' ' << merge(l, r).S << '\n';
+			l = merge(merge(pii(t, t), getpath(a, b)), pii(0, 0));
+			cout << (l != bad ? "yes\n" : "no\n");
+		}
+		else
+		{
+			int ans = 0;
+			for (int p = 1; head[a][p]; p++)
+			{
+				int c = head[a][p];
+				pii path = getpath(a, c);
+				// cerr << a << ' ' << c << ' ' << path.F << ' ' << path.S << '\n';
+				if (path == bad || path.F > path.S || path.S > t)
+					continue;
+				int k = path.S;
+				// cerr << '+' << bit[c].query(k, -1) << '\n';
+				ans += bit[c].query(k, -1);
+			}
+			cout << ans << '\n';
+		}
+	}
 }

@@ -85,6 +85,14 @@ namespace
     vector<base> mul(vector<base> f, vector<base> g)
     {
         int n = f.size() + g.size();
+        if(n <= 200)
+        {
+            vector<base> h(n);
+            for (int i = 0; i < f.size(); i++)
+                for (int j = 0; j < g.size(); j++)
+                    h[i + j] = (h[i + j] + f[i] * g[j]) % mod;
+            return h;
+        }
         int sz = 1 << (__lg(n - 1) + 1);
         f.resize(sz), g.resize(sz);
         calcrev(sz);

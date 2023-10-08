@@ -1,0 +1,30 @@
+\contentsline {section}{\numberline {0}Basic}{1}{}%
+\contentsline {subsection}{\numberline {0.1}Compiling}{1}{}%
+\contentsline {subsection}{\numberline {0.2}.vimrc}{1}{}%
+\contentsline {subsection}{\numberline {0.3}spiltmix64}{1}{}%
+\contentsline {subsection}{\numberline {0.4}mt19937}{1}{}%
+\contentsline {subsection}{\numberline {0.5}PBDS}{1}{}%
+\contentsline {section}{\numberline {1}Graph}{1}{}%
+\contentsline {subsection}{\numberline {1.1}Dinic}{1}{}%
+\contentsline {section}{\numberline {2}Data Structure}{2}{}%
+\contentsline {subsection}{\numberline {2.1}Treap}{2}{}%
+\contentsline {section}{\numberline {3}Math}{2}{}%
+\contentsline {subsection}{\numberline {3.1}Eratosthenes Sieve}{2}{}%
+\contentsline {subsection}{\numberline {3.2}Linear Sieve}{2}{}%
+\contentsline {subsection}{\numberline {3.3}Extended GCD}{2}{}%
+\contentsline {subsection}{\numberline {3.4}FFT}{2}{}%
+\contentsline {subsection}{\numberline {3.5}NTT}{3}{}%
+\contentsline {section}{\numberline {4}Geometry}{3}{}%
+\contentsline {subsection}{\numberline {4.1}Basic}{3}{}%
+\contentsline {subsection}{\numberline {4.2}Minimum Euclidean Distance}{3}{}%
+\contentsline {subsection}{\numberline {4.3}Convex Hull}{3}{}%
+\contentsline {subsection}{\numberline {4.4}Angle Sort}{3}{}%
+\contentsline {subsection}{\numberline {4.5}Pick's Theorem}{3}{}%
+\contentsline {section}{\numberline {5}String}{4}{}%
+\contentsline {subsection}{\numberline {5.1}Primes}{4}{}%
+\contentsline {subsection}{\numberline {5.2}KMP}{4}{}%
+\contentsline {subsection}{\numberline {5.3}Z}{4}{}%
+\contentsline {subsection}{\numberline {5.4}Manacher}{4}{}%
+\contentsline {subsection}{\numberline {5.5}Minimum Rotation}{4}{}%
+\contentsline {subsection}{\numberline {5.6}Aho Corasick}{4}{}%
+\contentsline {subsection}{\numberline {5.7}Suffix Array}{4}{}%

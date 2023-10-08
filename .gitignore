@@ -1,3 +1,8 @@
+# Ignore all, unignore all with extensions, unignore all dirs.
+*
+!*.*
+!*/
+
 # Executables
 *.exe
 *.app
@@ -11,12 +16,3 @@ tempCodeRunnerFile.exe
 # Vim
 *.swo
 *.swp
-
-# Problem Setting
-/Prob_Setting/*
-/Prob_Setting/
-
-/3nhypercube.cpp
-/parse_edge.cpp
-/right.txt
-/left.txt

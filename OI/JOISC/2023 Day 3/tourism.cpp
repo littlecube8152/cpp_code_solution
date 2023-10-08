@@ -1,3 +1,4 @@
+#pragma GCC optimize("Ofast,unroll-loops")
 #include <bits/stdc++.h>
 #define ll long long
 #define pii pair<int, int>

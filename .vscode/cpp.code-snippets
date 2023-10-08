@@ -1,0 +1,52 @@
+{
+    "Edge Loop (Undirected)": {
+        "scope": "cpp",
+        "prefix": [
+            "undirected"
+        ],
+        "body": [
+            "for (int i = 1; i <= ${1:edgeCount}; i++)",
+            "{",
+            "\tint u, v;",
+            "\tcin >> u >> v;",
+            "\t${2:edgeVariable}[u].emplace_back(v);",
+            "\t${2:edgeVariable}[v].emplace_back(u);",
+            "}"
+        ],
+        "description": "A for loop."
+    },
+    "Edge Loop (Directed)": {
+        "scope": "cpp",
+        "prefix": [
+            "directed"
+        ],
+        "body": [
+            "for (int i = 1; i <= ${1:edgeCount}; i++)",
+            "{",
+            "\tint u, v;",
+            "\tcin >> u >> v;",
+            "\t${2:edgeVariable}[u].emplace_back(v);",
+            "}"
+        ],
+        "description": "A for loop."
+    },
+    "DFS": {
+        "scope": "cpp",
+        "prefix": [
+            "DFS"
+        ],
+        "body": [
+            "void ${1:dfs}(int u)",
+            "{",
+            "\tfor (auto v : E[u])",
+            "\t\tif(v != pre[u])",
+            "\t\t{",
+            "\t\t\tpre[v] = u;",
+            "\t\t\t${1:dfs}(v);",
+            "\t\t\t${2:// do something}",
+            "\t\t}",
+            "}",
+        ],
+        "description": "A for loop."
+    }
+}

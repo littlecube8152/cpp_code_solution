@@ -7,8 +7,8 @@ using namespace std;
 namespace
 {
 #define base ll
-#define P 16
-#define N 1 << 16
+#define P 18
+#define N 1 << 18
     const ll mod = 998244353, g = 3;
     base omega[N], omega_[N];
     int rev[P + 1][N];
@@ -93,30 +93,23 @@ namespace
         return f;
     }
 
-    vector<base> inv(vector<base> &A)
+    vector<base> inv(vector<base> A)
     {
-        if (A.size() == 1)
-            return vector<base>{inverse(A[0])};
-        int sz = A.size();
-
-        // B(x) = A(x)A(-x)
-        // B is an even function (B(x) = B(-x)), so its odd terms are zero
-        // T(x^2) = B(x);
-        // A^-1(x) = A(-x)/A(x)A(-x) = A(-x)/B(x)
-
-        vector<base> negA = A;
-        for (int i = 0; i < sz; i++)
-            if (i & 1)
-                negA[i] = mod - negA[i];
-
-        vector<base> B = mul(A, negA), T((sz + 1) / 2), invB(sz);
-        for (int i = 0; i < sz; i++)
-            T[i / 2] += B[i];
-        T = inv(T);
-        for (int i = 0; i < (sz + 1) / 2; i++)
-            invB[i * 2] = T[i];
-
-        return mul(negA, invB);
+        A.resize(1 << (__lg(A.size() - 1) + 1));
+        vector<base> B = {inverse(A[0])};
+        for (int n = 1; n < A.size(); n += n)
+        {
+            vector<base> pA(A.begin(), A.begin() + 2 * n);
+            pA.resize(4 * n);
+            B.resize(4 * n);
+            pA = NTT(pA, 0);
+            B = NTT(B, 0);
+            for (int i = 0; i < 4 * n; i++)
+                B[i] = ((B[i] * 2 - pA[i] * B[i] % mod * B[i]) % mod + mod) % mod;
+            B = NTT(B, 1);
+            B.resize(2 * n);
+        }
+        return B;
     }
 
     vector<base> div(vector<base> A, vector<base> B)

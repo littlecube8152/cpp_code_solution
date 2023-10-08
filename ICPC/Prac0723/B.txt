@@ -1,0 +1,201 @@
+100
+5845 6139 124
+3368 1263 313
+8491 6341 1759
+4432 1248 1249
+1516 3943 2013
+7340 3302 4721
+242 7716 1750
+9493 5346 2204
+5723 5676 674
+6652 8829 254
+6018 6996 487
+9703 4537 1273
+7303 3166 4392
+6310 1725 4929
+1785 7223 1623
+6445 2998 3249
+2721 3664 1364
+8865 2088 4320
+9021 723 1111
+7594 3337 1008
+6446 6999 3459
+2358 4213 473
+7481 4627 4572
+9848 9329 1323
+9020 42 4972
+848 7565 4659
+5289 8370 1031
+8832 7012 2545
+7775 3090 3919
+7671 2346 1729
+8040 4118 2977
+6707 3143 342
+5687 7677 3452
+6187 453 3073
+6403 9446 816
+6016 4210 50
+647 2175 383
+3655 6345 4999
+4419 9372 3010
+6190 9278 3680
+3032 3831 1919
+3217 5969 4829
+6403 1504 3472
+3501 7549 3406
+6308 9909 1878
+7458 3596 867
+4709 5019 1671
+7597 9352 235
+7340 4379 4188
+2414 8996 1455
+855 2349 4012
+4281 2992 3100
+3426 6816 2613
+8282 775 1140
+1729 2471 3209
+6824 6954 1020
+1476 2064 1996
+1345 7662 4332
+6457 8808 4538
+2163 2785 4274
+188 844 319
+7074 7898 1390
+4448 8889 4226
+2710 3110 1738
+5479 5271 4640
+3494 7951 4349
+7233 8586 4172
+3814 7328 4046
+2325 4445 1937
+6866 8737 85
+1316 6298 1712
+711 2525 2472
+9673 2581 4031
+7728 6857 4851
+3561 641 2022
+5069 1220 2740
+8587 710 4101
+6552 3595 4063
+216 123 561
+4786 9719 4909
+4517 2612 333
+488 5445 3472
+8493 7483 1921
+3649 1807 21
+2296 2094 149
+327 336 1116
+4778 1917 1899
+7652 2018 814
+6446 4688 4501
+6815 1147 4731
+6885 3469 401
+2002 8788 3731
+4016 9814 3008
+1277 3628 3439
+738 7775 4540
+3774 6154 1800
+8845 435 3744
+6024 4228 2653
+4370 6399 1121
+9200 7532 1243
+ax.add_patch(circle1)
+ax.add_patch(circle2)
+ax.add_patch(circle3)
+ax.add_patch(circle4)
+ax.add_patch(circle5)
+ax.add_patch(circle6)
+ax.add_patch(circle7)
+ax.add_patch(circle8)
+ax.add_patch(circle9)
+ax.add_patch(circle10)
+ax.add_patch(circle11)
+ax.add_patch(circle12)
+ax.add_patch(circle13)
+ax.add_patch(circle14)
+ax.add_patch(circle15)
+ax.add_patch(circle16)
+ax.add_patch(circle17)
+ax.add_patch(circle18)
+ax.add_patch(circle19)
+ax.add_patch(circle20)
+ax.add_patch(circle21)
+ax.add_patch(circle22)
+ax.add_patch(circle23)
+ax.add_patch(circle24)
+ax.add_patch(circle25)
+ax.add_patch(circle26)
+ax.add_patch(circle27)
+ax.add_patch(circle28)
+ax.add_patch(circle29)
+ax.add_patch(circle30)
+ax.add_patch(circle31)
+ax.add_patch(circle32)
+ax.add_patch(circle33)
+ax.add_patch(circle34)
+ax.add_patch(circle35)
+ax.add_patch(circle36)
+ax.add_patch(circle37)
+ax.add_patch(circle38)
+ax.add_patch(circle39)
+ax.add_patch(circle40)
+ax.add_patch(circle41)
+ax.add_patch(circle42)
+ax.add_patch(circle43)
+ax.add_patch(circle44)
+ax.add_patch(circle45)
+ax.add_patch(circle46)
+ax.add_patch(circle47)
+ax.add_patch(circle48)
+ax.add_patch(circle49)
+ax.add_patch(circle50)
+ax.add_patch(circle51)
+ax.add_patch(circle52)
+ax.add_patch(circle53)
+ax.add_patch(circle54)
+ax.add_patch(circle55)
+ax.add_patch(circle56)
+ax.add_patch(circle57)
+ax.add_patch(circle58)
+ax.add_patch(circle59)
+ax.add_patch(circle60)
+ax.add_patch(circle61)
+ax.add_patch(circle62)
+ax.add_patch(circle63)
+ax.add_patch(circle64)
+ax.add_patch(circle65)
+ax.add_patch(circle66)
+ax.add_patch(circle67)
+ax.add_patch(circle68)
+ax.add_patch(circle69)
+ax.add_patch(circle70)
+ax.add_patch(circle71)
+ax.add_patch(circle72)
+ax.add_patch(circle73)
+ax.add_patch(circle74)
+ax.add_patch(circle75)
+ax.add_patch(circle76)
+ax.add_patch(circle77)
+ax.add_patch(circle78)
+ax.add_patch(circle79)
+ax.add_patch(circle80)
+ax.add_patch(circle81)
+ax.add_patch(circle82)
+ax.add_patch(circle83)
+ax.add_patch(circle84)
+ax.add_patch(circle85)
+ax.add_patch(circle86)
+ax.add_patch(circle87)
+ax.add_patch(circle88)
+ax.add_patch(circle89)
+ax.add_patch(circle90)
+ax.add_patch(circle91)
+ax.add_patch(circle92)
+ax.add_patch(circle93)
+ax.add_patch(circle94)
+ax.add_patch(circle95)
+ax.add_patch(circle96)
+ax.add_patch(circle97)
+ax.add_patch(circle98)
+ax.add_patch(circle99)
+ax.add_patch(circle100)

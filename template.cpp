@@ -3,7 +3,7 @@
 //  | |  |_|[   ][   ]| |/  _  \| |    | | | |  _  \/  _  \
 //  | L__| | | |_ | |_| || ____|| |___ | |_| | |_| || ____|
 //  L____|_| |___||___|_|\_____|\_____|\_____/\____/\_____|
-//  Segment Tree is hard.
+//  Since the day I applied ternary search on a non-convex function, everything was different.
 */
 #pragma GCC optimize("Ofast,unroll-loops")
 //#include <bits/extc++.h>

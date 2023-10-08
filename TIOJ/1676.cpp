@@ -26,8 +26,6 @@ using namespace std;
 struct line
 {
     ll a, b;
-    line() : a(0), b(0){};
-    line(ll a, ll b) : a(a), b(b){};
     ll value(ll x)
     {
         return a * x + b;
@@ -53,7 +51,7 @@ signed main()
         f[i] = f[i + 1] + s[i + 1];
 
     dp[0] = f[1];
-    dq.push_front(line(0, 0));
+    dq.push_front(line{0, 0});
     for (ll i = 1; i <= n; i++)
     {
         while (i - dq.front().a / 2 > k)
@@ -61,7 +59,7 @@ signed main()
         while (dq.size() >= 2 && point(dq.front(), dq[1]) - 1 < i)
             dq.pop_front();
         dp[i] = dq.front().value(i) + f[i] - i * i;
-        line l = line(2 * i, dp[i] - f[i + 1] - i * i);
+        line l = line{2 * i, dp[i] - f[i + 1] - i * i};
         while (dq.size() >= 2 && point(dq.back(), l) - min(point(dq[dq.size() - 2], dq.back()) - 1, dq[dq.size() - 2].a / 2 + k) <= 1)
             dq.pop_back();
         dq.push_back(l);

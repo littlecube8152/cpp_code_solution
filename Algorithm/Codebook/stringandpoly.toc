@@ -1,0 +1,24 @@
+\contentsline {section}{\numberline {0}Basic}{1}{}%
+\contentsline {subsection}{\numberline {0.1}Compiling}{1}{}%
+\contentsline {subsection}{\numberline {0.2}.vimrc}{1}{}%
+\contentsline {subsection}{\numberline {0.3}spiltmix64}{1}{}%
+\contentsline {subsection}{\numberline {0.4}mt19937}{1}{}%
+\contentsline {subsection}{\numberline {0.5}PBDS}{1}{}%
+\contentsline {section}{\numberline {1}Math}{1}{}%
+\contentsline {subsection}{\numberline {1.1}Extended GCD}{1}{}%
+\contentsline {section}{\numberline {2}Polynomial}{1}{}%
+\contentsline {subsection}{\numberline {2.1}NTT (FFT)}{1}{}%
+\contentsline {subsection}{\numberline {2.2}Inverse}{2}{}%
+\contentsline {subsection}{\numberline {2.3}Division}{2}{}%
+\contentsline {subsection}{\numberline {2.4}Linear Recurrence}{2}{}%
+\contentsline {subsection}{\numberline {2.5}Sparse Power}{2}{}%
+\contentsline {section}{\numberline {3}Geometry}{2}{}%
+\contentsline {subsection}{\numberline {3.1}Pick's Theorem}{2}{}%
+\contentsline {section}{\numberline {4}String}{2}{}%
+\contentsline {subsection}{\numberline {4.1}Hash Primes}{2}{}%
+\contentsline {subsection}{\numberline {4.2}KMP}{2}{}%
+\contentsline {subsection}{\numberline {4.3}Z}{2}{}%
+\contentsline {subsection}{\numberline {4.4}Manacher}{2}{}%
+\contentsline {subsection}{\numberline {4.5}Minimum Rotation}{3}{}%
+\contentsline {subsection}{\numberline {4.6}Aho Corasick}{3}{}%
+\contentsline {subsection}{\numberline {4.7}Suffix Array}{3}{}%
