@@ -9,7 +9,7 @@ def solve(b, c):
 	sd = math.isqrt(d)
 	if sd * sd != d:
 		return 0
-	p = -b + sd;
+	p = -b + sd
 	if p % 2 != 0:
 		return 0
 	return p // 2
@@ -34,9 +34,9 @@ while i < len(sols):
 	if find(b, c) > a:
 		sols.append([find(b, c), b, c])
 	if find(a, c) > b:
-	 	sols.append([find(a, c), a, c])
+		sols.append([find(a, c), a, c])
 	if find(a, b) > c:
-	 	sols.append([find(a, b), a, b])
+		sols.append([find(a, b), a, b])
 	i = i + 1
 
 

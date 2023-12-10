@@ -142,19 +142,22 @@ void iterate()
     theta /= 20.0;
 }
 
+double cone_distance(double r, double h, point a, point b)
+{
+    if (on_bottom(a) && on_bottom(b))
+        return straight(a, b);
+    else
+    {
+        for (int t = 1; t <= 10; t++)
+            iterate();
+        return ans;
+    }
+}
+
 signed main()
 {
     fast;
 
     cin >> r >> h >> a.x >> a.y >> a.z >> b.x >> b.y >> b.z;
-    cout << fixed << setprecision(10);
-
-    if (on_bottom(a) && on_bottom(b))
-        cout << straight(a, b) << '\n';
-    else
-    {
-        for (int t = 1; t <= 10; t++)
-            iterate();
-        cout << ans << '\n';
-    }
+    cout << fixed << setprecision(10) << cone_distance(r, h, a, b) << '\n';
 }
